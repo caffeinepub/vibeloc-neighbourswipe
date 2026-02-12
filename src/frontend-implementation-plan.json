@@ -1,0 +1,318 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "VibeLoc (NeighbourSwipe) — Mobile-first swipe-based neighbourhood matching MVP (Frontend)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create a mobile-first React app shell with routing and navigation for Onboarding, Discover, Shortlist, and Profile/Preferences.",
+      "acceptanceCriteria": [
+        "App is usable on mobile viewport widths (e.g., 360px) without horizontal scrolling.",
+        "There are distinct screens/routes for Onboarding, Discover, Shortlist, and Profile/Preferences.",
+        "User-facing text is in English and consistently uses the names “VibeLoc” and “NeighbourSwipe”."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the top-level app component that provides the VibeLoc (NeighbourSwipe) UI shell, registers routes (Onboarding, Discover, Shortlist, Profile/Preferences), and applies a mobile-first layout wrapper."
+        },
+        {
+          "path": "frontend/src/routes/appRoutes.tsx",
+          "operation": "create",
+          "description": "Define route configuration for Onboarding, Discover, Shortlist, and Profile/Preferences, including default navigation behavior (e.g., first-run goes to Onboarding, otherwise Discover)."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a reusable mobile-first layout component that renders a header and bottom navigation while keeping content within a safe max width and preventing horizontal scroll."
+        },
+        {
+          "path": "frontend/src/components/layout/BottomNav.tsx",
+          "operation": "create",
+          "description": "Implement a bottom navigation bar for mobile with tabs/links to Onboarding, Discover, Shortlist, and Profile/Preferences. Use the shadcn-ui component library for consistent navigation UI. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/OnboardingPage.tsx",
+          "operation": "create",
+          "description": "Create the Onboarding screen container and wire it to the routing flow (entry point for first-time users)."
+        },
+        {
+          "path": "frontend/src/pages/DiscoverPage.tsx",
+          "operation": "create",
+          "description": "Create the Discover screen container that will host the swipe feed and related empty states."
+        },
+        {
+          "path": "frontend/src/pages/ShortlistPage.tsx",
+          "operation": "create",
+          "description": "Create the Shortlist screen container that lists liked neighbourhoods."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePreferencesPage.tsx",
+          "operation": "create",
+          "description": "Create the Profile/Preferences screen container that displays sign-in status and allows editing preferences."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Ensure the document title and any visible metadata consistently use “VibeLoc (NeighbourSwipe)” and remain English-only."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement onboarding to capture and persist budget, commute, and lifestyle preferences; allow returning later to edit preferences.",
+      "acceptanceCriteria": [
+        "Onboarding collects: budget range in KES, commute preference(s), and lifestyle tags.",
+        "After completing onboarding, the user is taken to the Discover swipe feed.",
+        "Preferences can be viewed and edited in Profile/Preferences and changes affect subsequent recommendations.",
+        "Preferences persist across reloads for the same signed-in user (or same browser session if not signed in)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/types/preferences.ts",
+          "operation": "create",
+          "description": "Define shared TypeScript types for renter preferences (budget range in KES, commute area/direction + max time, lifestyle tags) and onboarding completion state."
+        },
+        {
+          "path": "frontend/src/services/preferencesStorage.ts",
+          "operation": "create",
+          "description": "Implement preference persistence: use backend-backed storage when authenticated (via useActor and savePreferences/getOnboardingState), otherwise fall back to localStorage/sessionStorage; expose functions to get/save preferences and onboarding completion."
+        },
+        {
+          "path": "frontend/src/hooks/usePreferences.ts",
+          "operation": "create",
+          "description": "Create a React Query-based hook to load/save preferences, seamlessly switching between backend storage (signed in) and browser persistence (signed out), and to expose onboarding completion state."
+        },
+        {
+          "path": "frontend/src/components/onboarding/OnboardingForm.tsx",
+          "operation": "create",
+          "description": "Build the onboarding form UI to collect budget range (KES), commute preferences, and selectable lifestyle tags. Use shadcn-ui form inputs/components for consistent mobile-friendly controls. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/OnboardingPage.tsx",
+          "operation": "modify",
+          "description": "Wire the OnboardingForm into the page, save captured preferences and completion state, and navigate to Discover on completion."
+        },
+        {
+          "path": "frontend/src/components/profile/PreferencesEditor.tsx",
+          "operation": "create",
+          "description": "Create an editor UI to view and update saved preferences inside Profile/Preferences, reusing the same fields as onboarding. Use shadcn-ui components for consistent styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePreferencesPage.tsx",
+          "operation": "modify",
+          "description": "Render saved preferences and allow editing via PreferencesEditor; ensure saving updates the stored preferences and affects subsequent Discover recommendations."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Build a Tinder-like Discover swipe feed showing one neighbourhood card at a time with gestures and Like/Nope buttons.",
+      "acceptanceCriteria": [
+        "User can Like/Nope via swipe gestures on mobile and via explicit buttons.",
+        "After a decision, the next card appears with minimal latency.",
+        "Card displays: image, name, rent band in KES, a short description, and tags.",
+        "If the feed is exhausted, show an empty state with a call-to-action to adjust preferences or reset swipes."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/data/neighbourhoodCatalog.ts",
+          "operation": "create",
+          "description": "Create a frontend neighbourhood catalog representation (id/name/description/rent band/commute note/tags/image filename) to support UI rendering and bridging while backend catalog/recommendations evolve."
+        },
+        {
+          "path": "frontend/src/services/recommendations.ts",
+          "operation": "create",
+          "description": "Implement Discover feed data loading: call backend getRecommendations when available and map results to neighbourhood catalog entries; provide a fallback local ordering when signed out or if data is unavailable."
+        },
+        {
+          "path": "frontend/src/hooks/useSwipeFeed.ts",
+          "operation": "create",
+          "description": "Create a hook that manages the ordered feed, current card index, preloading/next-card latency, and integrates persisted swipe decisions to exclude already-swiped items."
+        },
+        {
+          "path": "frontend/src/components/discover/NeighbourhoodCard.tsx",
+          "operation": "create",
+          "description": "Implement the neighbourhood card UI (image, name, rent band in KES, short description, top tags, commute note/highlights) using shadcn-ui Card/Badge/Button styling primitives. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/discover/SwipeDeck.tsx",
+          "operation": "create",
+          "description": "Implement the swipe interaction layer (touch/pointer gestures with Like/Nope thresholds) and render the current NeighbourhoodCard plus action buttons; ensure it works on mobile devices."
+        },
+        {
+          "path": "frontend/src/components/discover/DiscoverEmptyState.tsx",
+          "operation": "create",
+          "description": "Create an empty state for when the feed is exhausted, with clear calls to action: adjust preferences (go to Profile/Preferences) and reset swipes."
+        },
+        {
+          "path": "frontend/src/pages/DiscoverPage.tsx",
+          "operation": "modify",
+          "description": "Wire SwipeDeck and DiscoverEmptyState into the Discover page, ensure fast progression between cards, and connect actions to persistence (Like/Nope) and feed reset."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Persist swipe decisions and implement a Shortlist screen for liked neighbourhoods with remove (unlike) support.",
+      "acceptanceCriteria": [
+        "Liking a neighbourhood adds it to the Shortlist.",
+        "Shortlist shows a list of liked neighbourhoods with image thumbnail, name, and key highlights.",
+        "User can remove an item from the Shortlist, and it no longer appears there.",
+        "Likes persist across reloads for the same signed-in user (or same browser session if not signed in)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/services/swipeStorage.ts",
+          "operation": "create",
+          "description": "Implement swipe/like persistence with dual-mode storage: when authenticated, use backend shortlistNeighbourhood/removeFromShortlist/getShortlistedNeighbourhoods/clearShortlist; otherwise persist likes/dislikes locally and expose reset/clear helpers."
+        },
+        {
+          "path": "frontend/src/hooks/useShortlist.ts",
+          "operation": "create",
+          "description": "Create a React Query-based hook for loading and mutating the shortlist (add/remove/reset), keeping Discover exclusions and Shortlist list in sync."
+        },
+        {
+          "path": "frontend/src/components/shortlist/ShortlistList.tsx",
+          "operation": "create",
+          "description": "Implement the shortlist list UI with thumbnail, name, highlights (rent band/commute note/top tags) and an unlike/remove control using shadcn-ui list/card/button components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ShortlistPage.tsx",
+          "operation": "modify",
+          "description": "Wire shortlist loading and rendering via ShortlistList; support removing items and show a clear empty state when no likes exist."
+        },
+        {
+          "path": "frontend/src/pages/DiscoverPage.tsx",
+          "operation": "modify",
+          "description": "Connect Like/Nope actions in Discover to swipeStorage so likes appear in Shortlist and swiped items are excluded from subsequent feed items."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Add Internet Identity sign-in UI and signed-in/signed-out states; when signed in, store preferences and likes via backend actor calls without editing immutable auth hook files.",
+      "acceptanceCriteria": [
+        "User can sign in and sign out using Internet Identity.",
+        "UI indicates whether the user is signed in (e.g., in Profile/Preferences).",
+        "When signed in, likes and preferences are fetched from and saved to the backend for that Principal.",
+        "No changes are requested to files under the immutable paths listed in system constraints."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/auth/AuthButton.tsx",
+          "operation": "create",
+          "description": "Create a sign-in/sign-out button using the existing useInternetIdentity hook; clear cached app data on logout using React Query's queryClient.clear(). Use the authorization selected component guidance for handling login/logout UX. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useUserProfile.ts",
+          "operation": "create",
+          "description": "Create hooks to load/save the caller user profile (getCallerUserProfile/saveCallerUserProfile) and role (getCallerUserRole) via useActor; handle unauthorized/backend trap errors gracefully in UI state."
+        },
+        {
+          "path": "frontend/src/components/profile/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Implement a first-login profile setup dialog to capture the user's name (do not display principal id). Use shadcn-ui Dialog/Form components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePreferencesPage.tsx",
+          "operation": "modify",
+          "description": "Show signed-in/signed-out state, render AuthButton, show the user's profile name when available, and trigger ProfileSetupDialog when authenticated but no profile exists (avoid modal flash using the authorization component guidance)."
+        },
+        {
+          "path": "frontend/src/services/preferencesStorage.ts",
+          "operation": "modify",
+          "description": "Ensure that when signed in, preferences and onboarding state are fetched/saved through backend actor calls; when signed out, fall back to local persistence without requiring any modifications to immutable auth hook files."
+        },
+        {
+          "path": "frontend/src/services/swipeStorage.ts",
+          "operation": "modify",
+          "description": "Ensure that when signed in, likes are loaded/saved through backend actor calls; when signed out, use local persistence; clear locally cached swipe state appropriately on logout if required by UX."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Define and apply a coherent warm Nairobi/urban visual theme (not blue/purple) consistently across screens with clear mobile interactions.",
+      "acceptanceCriteria": [
+        "Theme is consistent across Onboarding, Discover, Shortlist, and Profile/Preferences.",
+        "Design avoids a default “template look” and uses a distinct style (do not use a blue/purple theme).",
+        "Interactive elements (buttons, swipe affordances) are visually clear on mobile."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create the global styles entry used by main.tsx, defining CSS variables and base styles for a warm Nairobi-inspired palette (avoid blue/purple), typography, and mobile-friendly defaults (no horizontal scroll)."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme extensions (via CSS variable mappings and/or additional semantic tokens) to align shadcn-ui components with the warm Nairobi theme while preserving the existing shadcn variable-based approach."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Apply consistent layout styling (header, safe-area padding, spacing, background) so the theme is visible and consistent across all screens."
+        },
+        {
+          "path": "frontend/src/components/discover/NeighbourhoodCard.tsx",
+          "operation": "modify",
+          "description": "Ensure card styling (typography, badges, button hierarchy) matches the theme and provides clear swipe affordances for mobile."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Integrate generated static images as frontend assets and use them for logo, onboarding, and neighbourhood card placeholder imagery.",
+      "acceptanceCriteria": [
+        "Images are stored under frontend/public/assets/generated and referenced by the UI.",
+        "Logo is visible on at least the onboarding screen and/or app header.",
+        "Neighbourhood cards display an image (neighbourhood-specific if available, otherwise a consistent placeholder)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/vibeloc-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated VibeLoc logo asset at frontend/public/assets/generated/vibeloc-logo.dim_512x512.png for direct frontend serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/neighbourhood-placeholder.dim_1080x1350.png",
+          "operation": "create",
+          "description": "Add the generated neighbourhood placeholder asset at frontend/public/assets/generated/neighbourhood-placeholder.dim_1080x1350.png for use in Discover/Shortlist cards when no neighbourhood-specific image is available."
+        },
+        {
+          "path": "frontend/public/assets/generated/onboarding-background.dim_1080x1920.png",
+          "operation": "create",
+          "description": "Add the generated onboarding background asset at frontend/public/assets/generated/onboarding-background.dim_1080x1920.png for the onboarding screen background."
+        },
+        {
+          "path": "frontend/src/components/layout/AppHeader.tsx",
+          "operation": "create",
+          "description": "Create a header component that displays the logo (frontend/public/assets/generated/vibeloc-logo.dim_512x512.png) and the product label “NeighbourSwipe”, using shadcn-ui primitives for consistent styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Wire AppHeader into the global layout so the logo is visible in the app shell on mobile."
+        },
+        {
+          "path": "frontend/src/pages/OnboardingPage.tsx",
+          "operation": "modify",
+          "description": "Apply the onboarding background image (frontend/public/assets/generated/onboarding-background.dim_1080x1920.png) and ensure the logo is visible on the onboarding screen."
+        },
+        {
+          "path": "frontend/src/components/discover/NeighbourhoodCard.tsx",
+          "operation": "modify",
+          "description": "Ensure neighbourhood cards render an image: use the neighbourhood-specific image filename from the catalog when present, otherwise use frontend/public/assets/generated/neighbourhood-placeholder.dim_1080x1350.png."
+        },
+        {
+          "path": "frontend/src/components/shortlist/ShortlistList.tsx",
+          "operation": "modify",
+          "description": "Ensure shortlist items display an image thumbnail using neighbourhood-specific images when present, otherwise the placeholder at frontend/public/assets/generated/neighbourhood-placeholder.dim_1080x1350.png."
+        }
+      ]
+    }
+  ]
+}

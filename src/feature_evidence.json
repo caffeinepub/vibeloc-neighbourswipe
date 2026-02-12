@@ -1,0 +1,171 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-mobile-first-react-ui-shell-for-the-app-named-vibeloc-with-the-product-label-neighbourswipe-including-top-level-navigation-and-routing-for-onboarding-discover-swipe-feed-shortlist-liked-neighbourhoods-and-profile-preferences",
+      "featureTitle": "Create a mobile-first React UI shell for the app named “VibeLoc” with the product label “NeighbourSwipe”, including top-level navigation and routing for: Onboarding, Discover (swipe feed), Shortlist (liked neighbourhoods), and Profile/Preferences.",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/components/layout/BottomNav.tsx",
+        "frontend/src/pages/DiscoverPage.tsx",
+        "frontend/src/pages/OnboardingPage.tsx",
+        "frontend/src/pages/ProfilePreferencesPage.tsx",
+        "frontend/src/pages/ShortlistPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-onboarding-to-capture-renter-preferences-used-for-matching-monthly-budget-range-kes-commute-preferences-primary-area-direction-max-commute-time-and-lifestyle-preferences-selectable-tags-persist-onboarding-completion-state-and-the-captured-preferences-so-the-user-can-return-later-and-edit-them",
+      "featureTitle": "Implement onboarding to capture renter preferences used for matching: monthly budget range (KES), commute preferences (primary area/direction + max commute time), and lifestyle preferences (selectable tags). Persist onboarding completion state and the captured preferences so the user can return later and edit them.",
+      "files": [
+        "frontend/src/components/onboarding/OnboardingForm.tsx",
+        "frontend/src/components/profile/PreferencesEditor.tsx",
+        "frontend/src/hooks/usePreferences.ts",
+        "frontend/src/pages/OnboardingPage.tsx",
+        "frontend/src/pages/ProfilePreferencesPage.tsx",
+        "frontend/src/services/preferencesStorage.ts",
+        "frontend/src/types/preferences.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-the-discover-swipe-experience-similar-to-tinder-show-one-neighbourhood-card-at-a-time-with-image-name-key-highlights-rent-band-commute-note-top-tags-and-clear-swipe-actions-like-nope-supporting-both-gestures-and-buttons",
+      "featureTitle": "Build the Discover swipe experience similar to Tinder: show one neighbourhood card at a time with image, name, key highlights (rent band, commute note, top tags), and clear swipe actions (Like / Nope) supporting both gestures and buttons.",
+      "files": [
+        "frontend/src/components/discover/DiscoverEmptyState.tsx",
+        "frontend/src/components/discover/NeighbourhoodCard.tsx",
+        "frontend/src/components/discover/SwipeDeck.tsx",
+        "frontend/src/data/neighbourhoodCatalog.ts",
+        "frontend/src/pages/DiscoverPage.tsx",
+        "frontend/src/services/recommendations.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-persist-swipe-decisions-like-dislike-per-user-and-implement-a-shortlist-screen-that-lists-liked-neighbourhoods-with-basic-details-and-the-ability-to-remove-unlike-an-item",
+      "featureTitle": "Persist swipe decisions (like/dislike) per user and implement a “Shortlist” screen that lists liked neighbourhoods with basic details and the ability to remove (unlike) an item.",
+      "files": [
+        "frontend/src/components/shortlist/ShortlistList.tsx",
+        "frontend/src/hooks/useShortlist.ts",
+        "frontend/src/pages/DiscoverPage.tsx",
+        "frontend/src/pages/ShortlistPage.tsx",
+        "frontend/src/services/swipeStorage.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-internet-identity-sign-in-support-so-that-preferences-and-likes-can-be-stored-per-principal-on-the-backend-provide-a-clear-signed-in-signed-out-state-in-the-ui-without-editing-immutable-auth-hook-files",
+      "featureTitle": "Add Internet Identity sign-in support so that preferences and likes can be stored per Principal on the backend; provide a clear signed-in/signed-out state in the UI without editing immutable auth hook files.",
+      "files": [
+        "frontend/src/components/auth/AuthButton.tsx",
+        "frontend/src/components/profile/ProfileSetupDialog.tsx",
+        "frontend/src/pages/ProfilePreferencesPage.tsx",
+        "frontend/src/services/preferencesStorage.ts",
+        "frontend/src/services/swipeStorage.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-define-and-apply-a-coherent-visual-theme-suitable-for-an-urban-kenya-nairobi-renter-audience-mobile-first-including-color-palette-typography-and-component-styling-and-use-it-consistently-across-all-screens",
+      "featureTitle": "Define and apply a coherent visual theme suitable for an urban Kenya/Nairobi renter audience (mobile-first), including color palette, typography, and component styling, and use it consistently across all screens.",
+      "files": [
+        "frontend/src/components/discover/NeighbourhoodCard.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-integrate-generated-static-images-as-frontend-assets-and-use-them-in-the-ui-logo-in-header-onboarding-neighbourhood-placeholder-imagery-in-cards-where-applicable-served-directly-from-the-frontend-not-via-backend",
+      "featureTitle": "Integrate generated static images as frontend assets and use them in the UI (logo in header/onboarding; neighbourhood placeholder imagery in cards where applicable), served directly from the frontend (not via backend).",
+      "files": [
+        "frontend/src/components/discover/NeighbourhoodCard.tsx",
+        "frontend/src/components/layout/AppHeader.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/components/shortlist/ShortlistList.tsx",
+        "frontend/src/pages/OnboardingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

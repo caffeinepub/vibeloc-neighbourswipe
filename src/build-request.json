@@ -1,0 +1,193 @@
+{
+  "kind": "build_request",
+  "title": "VibeLoc (NeighbourSwipe) — Mobile-first swipe-based neighbourhood matching MVP",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a mobile-first React UI shell for the app named “VibeLoc” with the product label “NeighbourSwipe”, including top-level navigation and routing for: Onboarding, Discover (swipe feed), Shortlist (liked neighbourhoods), and Profile/Preferences.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Build a mobile-first MVP application called (VibeLoc): “NeighbourSwipe” — a swipe-based neighbourhood discovery and matching platform for urban renters in Kenya."
+        ]
+      },
+      "acceptanceCriteria": [
+        "App is usable on mobile viewport widths (e.g., 360px) without horizontal scrolling.",
+        "There are distinct screens/routes for Onboarding, Discover, Shortlist, and Profile/Preferences.",
+        "User-facing text is in English and consistently uses the names “VibeLoc” and “NeighbourSwipe”."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement onboarding to capture renter preferences used for matching: monthly budget range (KES), commute preferences (primary area/direction + max commute time), and lifestyle preferences (selectable tags). Persist onboarding completion state and the captured preferences so the user can return later and edit them.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "The app helps users match with neighbourhoods based on lifestyle, commute, and budget — before they ever see specific houses."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Onboarding collects: budget range in KES, commute preference(s), and lifestyle tags.",
+        "After completing onboarding, the user is taken to the Discover swipe feed.",
+        "Preferences can be viewed and edited in Profile/Preferences and changes affect subsequent recommendations.",
+        "Preferences persist across reloads for the same signed-in user (or same browser session if not signed in)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Create a backend neighbourhood catalog for Nairobi, Kenya with an initial curated set of neighbourhood entries (seed data) including: name, short description, typical rent band (KES), commute notes, lifestyle tags, and 1 image reference per neighbourhood (static asset filename).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "VibeLoc is a swipe-based neighbourhood discovery app for urban renters and gig-economy workers in Nairobi, Kenya."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes a method to fetch neighbourhoods (seeded) with the required fields.",
+        "At least 10 Nairobi neighbourhoods are available in the catalog for the MVP.",
+        "Each neighbourhood includes tags and a rent band that can be used for matching."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement matching/recommendation logic that ranks neighbourhoods for a user based on their saved preferences (budget fit, commute fit, lifestyle tag overlap). Return a scored, ordered list for the Discover feed.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "The app helps users match with neighbourhoods based on lifestyle, commute, and budget."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend returns neighbourhoods ordered by a computed match score for the current user.",
+        "The ranking reflects changes when the user updates budget/commute/lifestyle preferences.",
+        "Already-swiped neighbourhoods (liked or disliked) are excluded from the Discover results."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Build the Discover swipe experience similar to Tinder: show one neighbourhood card at a time with image, name, key highlights (rent band, commute note, top tags), and clear swipe actions (Like / Nope) supporting both gestures and buttons.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "The experience should feel similar to Tinder, but users swipe on neighbourhoods instead of people."
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can Like/Nope via swipe gestures on mobile and via explicit buttons.",
+        "After a decision, the next card appears with minimal latency.",
+        "Card displays: image, name, rent band in KES, a short description, and tags.",
+        "If the feed is exhausted, show an empty state with a call-to-action to adjust preferences or reset swipes."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Persist swipe decisions (like/dislike) per user and implement a “Shortlist” screen that lists liked neighbourhoods with basic details and the ability to remove (unlike) an item.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Saved/liked neighbourhoods list (shortlist) with basic details for revisit"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Liking a neighbourhood adds it to the Shortlist.",
+        "Shortlist shows a list of liked neighbourhoods with image thumbnail, name, and key highlights.",
+        "User can remove an item from the Shortlist, and it no longer appears there.",
+        "Likes persist across reloads for the same signed-in user (or same browser session if not signed in)."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add Internet Identity sign-in support so that preferences and likes can be stored per Principal on the backend; provide a clear signed-in/signed-out state in the UI without editing immutable auth hook files.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Build a mobile-first MVP application called (VibeLoc): “NeighbourSwipe”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can sign in and sign out using Internet Identity.",
+        "UI indicates whether the user is signed in (e.g., in Profile/Preferences).",
+        "When signed in, likes and preferences are fetched from and saved to the backend for that Principal.",
+        "No changes are requested to files under the immutable paths listed in system constraints."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Define and apply a coherent visual theme suitable for an urban Kenya/Nairobi renter audience (mobile-first), including color palette, typography, and component styling, and use it consistently across all screens.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Build a mobile-first MVP application called (VibeLoc): “NeighbourSwipe”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is consistent across Onboarding, Discover, Shortlist, and Profile/Preferences.",
+        "Design avoids a default “template look” and uses a distinct style (do not use a blue/purple theme).",
+        "Interactive elements (buttons, swipe affordances) are visually clear on mobile."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Integrate generated static images as frontend assets and use them in the UI (logo in header/onboarding; neighbourhood placeholder imagery in cards where applicable), served directly from the frontend (not via backend).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "swipe-based neighbourhood discovery and matching platform"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Images are stored under frontend/public/assets/generated and referenced by the UI.",
+        "Logo is visible on at least the onboarding screen and/or app header.",
+        "Neighbourhood cards display an image (neighbourhood-specific if available, otherwise a consistent placeholder)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Use English for all user-facing text.",
+    "Backend must remain a single Motoko actor (all logic in backend/main.mo).",
+    "Do not edit any frontend files listed as immutable paths in SYSTEM_CONTEXT; compose them from other components instead.",
+    "Mobile-first UI: primary layout and interactions must work well on touch devices."
+  ],
+  "nonGoals": [
+    "Do not implement listing or browsing of specific houses/units (neighbourhoods only).",
+    "Do not implement maps, geolocation, or GPS-based features.",
+    "Do not implement chat, real-time messaging, push notifications, or email/SMS.",
+    "Do not implement payments or subscription billing."
+  ],
+  "imageRequirements": {
+    "required": [
+      "App logo mark + wordmark in a modern, warm, Nairobi-inspired style (vibeloc-logo.dim_512x512.png)",
+      "Neighbourhood card placeholder illustration with subtle city/urban motif, warm tones (neighbourhood-placeholder.dim_1080x1350.png)",
+      "Onboarding background pattern/illustration with abstract urban shapes, low-contrast (onboarding-background.dim_1080x1920.png)"
+    ],
+    "edits": []
+  }
+}

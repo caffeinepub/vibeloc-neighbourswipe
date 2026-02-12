@@ -1,0 +1,127 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-12T20:46:57.290Z",
+  "summary": "Frontend adds routing/layout, onboarding/preferences UI, swipe deck components, shortlist UI, and an Internet Identity auth button with an actor hook. Backend main.mo adds basic per-Principal profile/onboarding/shortlist scaffolding and access-control checks, but does not include the requested neighbourhood catalog or recommendation/matching logic. Generated static image assets are referenced but not shown as added under the required public path.",
+  "missing_requirements": [
+    {
+      "id": "REQ-3",
+      "requirement": "Create a backend neighbourhood catalog for Nairobi, Kenya with a seeded curated set (>=10) including name, description, rent band (KES), commute notes, lifestyle tags, and an image reference; expose a method to fetch neighbourhoods with these fields.",
+      "reason": "The diff shows a frontend Nairobi catalog file, but the backend main.mo does not show any seeded neighbourhood dataset or a backend method to fetch it with the required fields.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/data/neighbourhoodCatalog.ts"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Implement backend matching/recommendation logic ranking neighbourhoods by saved preferences (budget, commute, lifestyle overlap) and excluding already-swiped items; return scored ordered list for Discover.",
+      "reason": "backend/main.mo defines getRecommendations() but it returns an empty list and there is no visible scoring/ranking or exclusion based on swipes.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Persist onboarding completion state and captured preferences so user can return later and edit; preferences affect subsequent recommendations; persist across reloads for signed-in Principal (or session if not signed in).",
+      "reason": "Backend savePreferences takes a Text and only sets onboarding state complete; no backend getPreferences/update preferences API is shown. Recommendation logic is also missing, so preference changes cannot affect backend recommendations based on the diff.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/usePreferences.ts"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Persist swipe decisions (like/dislike) per user and implement Shortlist listing liked neighbourhoods with ability to unlike; likes persist across reloads (Principal or session).",
+      "reason": "Backend shows shortlistNeighbourhood/removeFromShortlist but the file is truncated and no method to fetch liked IDs/shortlist is shown. Dislike persistence/exclusion is also not evidenced. Frontend references SwipeStorage but its implementation is not shown in the diff summary, so persistence can’t be verified from provided evidence.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useShortlist.ts"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Discover swipe experience shows one card at a time with image/name/highlights and supports both gestures and Like/Nope buttons; minimal latency; empty state with CTA to adjust preferences or reset swipes.",
+      "reason": "Touch/mouse swipe handling and empty state are shown, but the SwipeDeck file is truncated before the explicit Like/Nope buttons section, and the data source that advances/excludes swiped items from the feed is not evidenced from the provided diff summary.",
+      "evidence": [
+        "frontend/src/components/discover/SwipeDeck.tsx",
+        "frontend/src/components/discover/DiscoverEmptyState.tsx"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Integrate generated static images as frontend assets stored under frontend/public/assets/generated and reference them in UI (logo + placeholders).",
+      "reason": "UI references /assets/generated/*.png, but the diff summary does not show the required images being added under frontend/public/assets/generated (added files list shows only code files; omitted files are unspecified).",
+      "evidence": [
+        "frontend/src/components/layout/AppHeader.tsx",
+        "frontend/src/components/discover/NeighbourhoodCard.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Access-control/authorization system with admin secret initialization and permission gating on backend methods.",
+      "reason": "Not requested by any requirement; requirements only specify single Motoko actor and per-Principal storage via Internet Identity, not an authorization framework with admin tokens/roles.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "User profile creation flow (name field) and profile-related backend APIs beyond renter preference capture.",
+      "reason": "BuildRequest focuses on renter preferences (budget/commute/tags), likes, and II sign-in state; a separate named user profile feature is not requested.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/profile/ProfileSetupDialog.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "description": "Frontend-side static Nairobi neighbourhood catalog used as data source.",
+      "reason": "REQ-3 explicitly requests the neighbourhood catalog be in the backend with a fetch method; adding a frontend catalog is extra/unrequested and potentially conflicts with the backend-source-of-truth intent.",
+      "evidence": [
+        "frontend/src/data/neighbourhoodCatalog.ts"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/AuthButton.tsx",
+    "frontend/src/components/discover/DiscoverEmptyState.tsx",
+    "frontend/src/components/discover/NeighbourhoodCard.tsx",
+    "frontend/src/components/discover/SwipeDeck.tsx",
+    "frontend/src/components/layout/AppHeader.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/layout/BottomNav.tsx",
+    "frontend/src/components/onboarding/OnboardingForm.tsx",
+    "frontend/src/components/profile/PreferencesEditor.tsx",
+    "frontend/src/components/profile/ProfileSetupDialog.tsx",
+    "frontend/src/components/shortlist/ShortlistList.tsx",
+    "frontend/src/data/neighbourhoodCatalog.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/usePreferences.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useShortlist.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/DiscoverPage.tsx",
+    "frontend/src/pages/OnboardingPage.tsx",
+    "frontend/src/pages/ProfilePreferencesPage.tsx",
+    "frontend/src/pages/ShortlistPage.tsx",
+    "frontend/src/services/preferencesStorage.ts",
+    "frontend/src/services/recommendations.ts",
+    "frontend/src/services/swipeStorage.ts",
+    "frontend/src/types/neighbourhood.ts",
+    "frontend/src/types/preferences.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

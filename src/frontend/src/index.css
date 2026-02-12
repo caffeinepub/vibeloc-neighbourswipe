@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.75rem;
+        
+        /* Warm Nairobi-inspired palette - Light mode */
+        --background: 0.98 0.01 45;
+        --foreground: 0.25 0.02 30;
+        
+        --card: 1 0 0;
+        --card-foreground: 0.25 0.02 30;
+        
+        --popover: 1 0 0;
+        --popover-foreground: 0.25 0.02 30;
+        
+        /* Terracotta/burnt orange primary */
+        --primary: 0.55 0.18 35;
+        --primary-foreground: 0.98 0.01 45;
+        
+        /* Warm sand secondary */
+        --secondary: 0.92 0.03 55;
+        --secondary-foreground: 0.35 0.02 30;
+        
+        --muted: 0.95 0.02 50;
+        --muted-foreground: 0.50 0.02 35;
+        
+        /* Warm accent - golden hour */
+        --accent: 0.75 0.12 65;
+        --accent-foreground: 0.30 0.02 30;
+        
+        --destructive: 0.55 0.22 25;
+        --destructive-foreground: 0.98 0.01 45;
+        
+        --border: 0.90 0.02 50;
+        --input: 0.90 0.02 50;
+        --ring: 0.55 0.18 35;
+        
+        --chart-1: 0.60 0.15 40;
+        --chart-2: 0.65 0.12 60;
+        --chart-3: 0.70 0.10 80;
+        --chart-4: 0.55 0.18 25;
+        --chart-5: 0.75 0.14 50;
+    }
+
+    .dark {
+        /* Dark mode - warm night tones */
+        --background: 0.20 0.02 30;
+        --foreground: 0.95 0.01 50;
+        
+        --card: 0.25 0.02 30;
+        --card-foreground: 0.95 0.01 50;
+        
+        --popover: 0.22 0.02 30;
+        --popover-foreground: 0.95 0.01 50;
+        
+        /* Lighter terracotta for dark mode */
+        --primary: 0.65 0.16 40;
+        --primary-foreground: 0.20 0.02 30;
+        
+        --secondary: 0.30 0.02 35;
+        --secondary-foreground: 0.95 0.01 50;
+        
+        --muted: 0.30 0.02 35;
+        --muted-foreground: 0.65 0.02 45;
+        
+        --accent: 0.45 0.08 50;
+        --accent-foreground: 0.95 0.01 50;
+        
+        --destructive: 0.60 0.20 30;
+        --destructive-foreground: 0.95 0.01 50;
+        
+        --border: 0.35 0.02 35;
+        --input: 0.35 0.02 35;
+        --ring: 0.65 0.16 40;
+        
+        --chart-1: 0.65 0.14 45;
+        --chart-2: 0.70 0.11 65;
+        --chart-3: 0.75 0.09 85;
+        --chart-4: 0.60 0.17 30;
+        --chart-5: 0.80 0.13 55;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+    
+    /* Prevent horizontal scroll on mobile */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+}
