@@ -1,0 +1,24 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-expand-the-existing-static-neighbourhood-catalog-frontend-src-data-neighbourhoodcatalog-ts-by-adding-additional-major-nairobi-and-nearby-metro-neighbourhoods-areas-keeping-the-existing-neighbourhood-shape-id-name-description-rentmin-rentmax-commutenote-tags-imagefilename-and-ensuring-all-entries-have-unique-numeric-ids-and-no-duplicate-names",
+      "featureTitle": "Expand the existing static neighbourhood catalog (frontend/src/data/neighbourhoodCatalog.ts) by adding additional major Nairobi and nearby metro neighbourhoods/areas, keeping the existing Neighbourhood shape (id, name, description, rentMin, rentMax, commuteNote, tags, imageFilename) and ensuring all entries have unique numeric IDs and no duplicate names.",
+      "files": [
+        "frontend/src/data/neighbourhoodCatalog.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-17T23:06:18.868Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 1,
+    "implemented": 1,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Expand the existing static neighbourhood catalog (frontend/src/data/neighbourhoodCatalog.ts) by adding additional major Nairobi and nearby metro neighbourhoods/areas, keeping the existing Neighbourhood shape (id, name, description, rentMin, rentMax, commuteNote, tags, imageFilename) and ensuring all entries have unique numeric IDs and no duplicate names.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/data/neighbourhoodCatalog.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/data/neighbourhoodCatalog.ts"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/config.ts",
+    "frontend/src/data/neighbourhoodCatalog.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

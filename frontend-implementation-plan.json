@@ -1,0 +1,24 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Expand VibeLoc static neighbourhood catalog for Nairobi & metro areas",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Add additional major Nairobi and nearby metro neighbourhood entries to the static catalogue while preserving the existing Neighbourhood shape, keeping IDs unique and names non-duplicated, and ensuring the Discover swipe feed continues to work.",
+      "acceptanceCriteria": [
+        "frontend/src/data/neighbourhoodCatalog.ts includes new Neighbourhood entries for the following user-requested areas (as individual entries or clearly named group entries where appropriate): Kitengela, Kiambu Region, Thika, Eastlands (e.g., Umoja/Donholm/Buruburu), Ruai, Utawala, Syokimau, Athi River, Rongai, Ngong, Ruiru, Kamulu, Joska, Kahawa West, Zimmerman, Embakasi South (e.g., Pipeline/Imara Daima), South C, Tatu City, Northlands.",
+        "All neighbourhood IDs in NAIROBI_NEIGHBOURHOODS are unique and continue consistently beyond the current highest ID (12).",
+        "The Discover swipe feed continues to render and allows swiping through the expanded list without runtime errors.",
+        "New entries use a valid imageFilename (may reuse the existing neighbourhood placeholder asset filename if no new images are provided)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/data/neighbourhoodCatalog.ts",
+          "operation": "modify",
+          "description": "Append new Neighbourhood items for Kitengela, Kiambu Region, Thika, Eastlands (e.g., Umoja, Donholm, Buruburu), Ruai, Utawala, Syokimau, Athi River, Rongai, Ngong, Ruiru, Kamulu, Joska, Kahawa West, Zimmerman, Embakasi South (e.g., Pipeline, Imara Daima), South C, Tatu City, and Northlands; ensure each entry keeps the existing Neighbourhood fields, uses unique numeric IDs continuing from 13 onward, avoids duplicate names (including vs existing entries), and sets imageFilename to the existing placeholder filename (neighbourhood-placeholder.dim_1080x1350.png) to remain compatible with the Discover swipe feed rendering."
+        }
+      ]
+    }
+  ]
+}

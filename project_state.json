@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Neighbourhood-discovery app focused on Nairobi (and nearby metro areas) with neighbourhood cards and potential AI-generated summaries; user is expanding the list of neighbourhoods covered.",
+  "architectural_notes": [
+    "Assistant does not have direct access to the app’s stored neighbourhood list; it can only use neighbourhoods provided in-chat unless integrated with the app data source."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-expand-the-existing-static-neighbourhood-catalog-frontend-src-data-neighbourhoodcatalog-ts-by-adding-additional-major-nairobi-and-nearby-metro-neighbourhoods-areas-keeping-the-existing-neighbourhood-shape-id-name-description-rentmin-rentmax-commutenote-tags-imagefilename-and-ensuring-all-entries-have-unique-numeric-ids-and-no-duplicate-names",
+      "title": "Expand the existing static neighbourhood catalog (frontend/src/data/neighbourhoodCatalog.ts) by adding additional major Nairobi and nearby metro neighbourhoods/areas, keeping the existing Neighbourhood shape (id, name, description, rentMin, rentMax, commuteNote, tags, imageFilename) and ensuring all entries have unique numeric IDs and no duplicate names.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Expand the app’s neighbourhood coverage by adding other major neighbourhoods based on the already-existing neighbourhood set.",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "projectName": "VibeLoc",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
