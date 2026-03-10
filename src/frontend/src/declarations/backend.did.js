@@ -13,24 +13,48 @@ export const UserRole = IDL.Variant({
   'user' : IDL.Null,
   'guest' : IDL.Null,
 });
+export const Time = IDL.Int;
+export const SpaceListing = IDL.Record({
+  'id' : IDL.Nat,
+  'title' : IDL.Text,
+  'postedBy' : IDL.Principal,
+  'createdAt' : Time,
+  'description' : IDL.Text,
+  'neighbourhood' : IDL.Text,
+  'spaceType' : IDL.Text,
+  'price' : IDL.Nat,
+});
 export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 export const OnboardingState = IDL.Record({ 'isComplete' : IDL.Bool });
 export const Recommendation = IDL.Record({
   'neighbourhood' : IDL.Text,
   'score' : IDL.Nat,
 });
-export const Time = IDL.Int;
 export const ShortlistItem = IDL.Record({
   'savedAt' : Time,
   'neighbourhoodId' : IDL.Nat,
+});
+export const SpaceListingInput = IDL.Record({
+  'title' : IDL.Text,
+  'description' : IDL.Text,
+  'neighbourhood' : IDL.Text,
+  'spaceType' : IDL.Text,
+  'price' : IDL.Nat,
 });
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'clearShortlist' : IDL.Func([], [], []),
+  'deleteListing' : IDL.Func([IDL.Nat], [], []),
+  'getAllListings' : IDL.Func([], [IDL.Vec(SpaceListing)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getListingsByNeighbourhood' : IDL.Func(
+      [IDL.Text],
+      [IDL.Vec(SpaceListing)],
+      ['query'],
+    ),
   'getOnboardingState' : IDL.Func([], [OnboardingState], ['query']),
   'getRecommendations' : IDL.Func([], [IDL.Vec(Recommendation)], ['query']),
   'getShortlistedNeighbourhoods' : IDL.Func(
@@ -44,6 +68,7 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'postSpaceListing' : IDL.Func([SpaceListingInput], [IDL.Nat], []),
   'removeFromShortlist' : IDL.Func([IDL.Nat], [], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
   'savePreferences' : IDL.Func([IDL.Text], [], []),
@@ -58,24 +83,48 @@ export const idlFactory = ({ IDL }) => {
     'user' : IDL.Null,
     'guest' : IDL.Null,
   });
+  const Time = IDL.Int;
+  const SpaceListing = IDL.Record({
+    'id' : IDL.Nat,
+    'title' : IDL.Text,
+    'postedBy' : IDL.Principal,
+    'createdAt' : Time,
+    'description' : IDL.Text,
+    'neighbourhood' : IDL.Text,
+    'spaceType' : IDL.Text,
+    'price' : IDL.Nat,
+  });
   const UserProfile = IDL.Record({ 'name' : IDL.Text });
   const OnboardingState = IDL.Record({ 'isComplete' : IDL.Bool });
   const Recommendation = IDL.Record({
     'neighbourhood' : IDL.Text,
     'score' : IDL.Nat,
   });
-  const Time = IDL.Int;
   const ShortlistItem = IDL.Record({
     'savedAt' : Time,
     'neighbourhoodId' : IDL.Nat,
+  });
+  const SpaceListingInput = IDL.Record({
+    'title' : IDL.Text,
+    'description' : IDL.Text,
+    'neighbourhood' : IDL.Text,
+    'spaceType' : IDL.Text,
+    'price' : IDL.Nat,
   });
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'clearShortlist' : IDL.Func([], [], []),
+    'deleteListing' : IDL.Func([IDL.Nat], [], []),
+    'getAllListings' : IDL.Func([], [IDL.Vec(SpaceListing)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getListingsByNeighbourhood' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(SpaceListing)],
+        ['query'],
+      ),
     'getOnboardingState' : IDL.Func([], [OnboardingState], ['query']),
     'getRecommendations' : IDL.Func([], [IDL.Vec(Recommendation)], ['query']),
     'getShortlistedNeighbourhoods' : IDL.Func(
@@ -89,6 +138,7 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'postSpaceListing' : IDL.Func([SpaceListingInput], [IDL.Nat], []),
     'removeFromShortlist' : IDL.Func([IDL.Nat], [], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
     'savePreferences' : IDL.Func([IDL.Text], [], []),

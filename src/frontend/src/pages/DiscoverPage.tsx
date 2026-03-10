@@ -1,22 +1,23 @@
-import { useEffect } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { usePreferences } from '../hooks/usePreferences';
-import { useShortlist, useSwipeFeed } from '../hooks/useShortlist';
-import { getRecommendations } from '../services/recommendations';
-import SwipeDeck from '../components/discover/SwipeDeck';
-import DiscoverEmptyState from '../components/discover/DiscoverEmptyState';
-import { Neighbourhood } from '../types/neighbourhood';
-import { toast } from 'sonner';
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import DiscoverEmptyState from "../components/discover/DiscoverEmptyState";
+import SwipeDeck from "../components/discover/SwipeDeck";
+import { usePreferences } from "../hooks/usePreferences";
+import { useShortlist, useSwipeFeed } from "../hooks/useShortlist";
+import { getRecommendations } from "../services/recommendations";
+import type { Neighbourhood } from "../types/neighbourhood";
 
 export default function DiscoverPage() {
   const navigate = useNavigate();
-  const { preferences, onboardingComplete, isLoadingOnboarding } = usePreferences();
+  const { preferences, onboardingComplete, isLoadingOnboarding } =
+    usePreferences();
   const { addToShortlist, clearShortlist } = useShortlist();
   const { swipedIds, isLoading: isLoadingSwipes } = useSwipeFeed();
 
   useEffect(() => {
     if (!isLoadingOnboarding && !onboardingComplete) {
-      navigate({ to: '/onboarding' });
+      navigate({ to: "/onboarding" });
     }
   }, [onboardingComplete, isLoadingOnboarding, navigate]);
 
@@ -27,21 +28,21 @@ export default function DiscoverPage() {
       await addToShortlist(neighbourhood.id);
       toast.success(`${neighbourhood.name} added to shortlist!`);
     } catch (error) {
-      toast.error('Failed to add to shortlist');
+      toast.error("Failed to add to shortlist");
       console.error(error);
     }
   };
 
-  const handleDislike = (neighbourhood: Neighbourhood) => {
+  const handleDislike = (_neighbourhood: Neighbourhood) => {
     // Dislike is handled by the swipe storage automatically
   };
 
   const handleReset = async () => {
     try {
       await clearShortlist();
-      toast.success('Swipes reset! Start fresh.');
+      toast.success("Swipes reset! Start fresh.");
     } catch (error) {
-      toast.error('Failed to reset swipes');
+      toast.error("Failed to reset swipes");
       console.error(error);
     }
   };
@@ -51,7 +52,9 @@ export default function DiscoverPage() {
       <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center">
         <div className="text-center">
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          <p className="mt-4 text-sm text-muted-foreground">Loading neighbourhoods...</p>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Loading neighbourhoods...
+          </p>
         </div>
       </div>
     );

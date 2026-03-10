@@ -1,9 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useActor } from './useActor';
-import { useInternetIdentity } from './useInternetIdentity';
-import { SwipeStorage } from '../services/swipeStorage';
-import { getNeighbourhoodById } from '../data/neighbourhoodCatalog';
-import { Neighbourhood } from '../types/neighbourhood';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getNeighbourhoodById } from "../data/neighbourhoodCatalog";
+import { SwipeStorage } from "../services/swipeStorage";
+import type { Neighbourhood } from "../types/neighbourhood";
+import { useActor } from "./useActor";
+import { useInternetIdentity } from "./useInternetIdentity";
 
 export function useShortlist() {
   const { actor } = useActor();
@@ -14,7 +14,7 @@ export function useShortlist() {
   const storage = new SwipeStorage(actor, isAuthenticated);
 
   const shortlistQuery = useQuery({
-    queryKey: ['shortlist', identity?.getPrincipal().toString()],
+    queryKey: ["shortlist", identity?.getPrincipal().toString()],
     queryFn: async () => {
       const ids = await storage.getLikedIds();
       return ids
@@ -27,21 +27,22 @@ export function useShortlist() {
   const addMutation = useMutation({
     mutationFn: (neighbourhoodId: number) => storage.addLike(neighbourhoodId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['shortlist'] });
+      queryClient.invalidateQueries({ queryKey: ["shortlist"] });
     },
   });
 
   const removeMutation = useMutation({
-    mutationFn: (neighbourhoodId: number) => storage.removeLike(neighbourhoodId),
+    mutationFn: (neighbourhoodId: number) =>
+      storage.removeLike(neighbourhoodId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['shortlist'] });
+      queryClient.invalidateQueries({ queryKey: ["shortlist"] });
     },
   });
 
   const clearMutation = useMutation({
     mutationFn: () => storage.clearAll(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['shortlist'] });
+      queryClient.invalidateQueries({ queryKey: ["shortlist"] });
     },
   });
 
@@ -62,7 +63,7 @@ export function useSwipeFeed() {
   const storage = new SwipeStorage(actor, isAuthenticated);
 
   const swipedQuery = useQuery({
-    queryKey: ['swipedIds', identity?.getPrincipal().toString()],
+    queryKey: ["swipedIds", identity?.getPrincipal().toString()],
     queryFn: async () => {
       const likes = await storage.getLikedIds();
       const dislikes = storage.getDislikedIds();

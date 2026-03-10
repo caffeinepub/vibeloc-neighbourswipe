@@ -1,12 +1,15 @@
-import PreferencesEditor from '../profile/PreferencesEditor';
-import { RenterPreferences } from '../../types/preferences';
+import type { RenterPreferences } from "../../types/preferences";
+import PreferencesEditor from "../profile/PreferencesEditor";
 
 interface OnboardingFormProps {
   onComplete: (preferences: RenterPreferences) => Promise<void>;
   isSaving: boolean;
 }
 
-export default function OnboardingForm({ onComplete, isSaving }: OnboardingFormProps) {
+export default function OnboardingForm({
+  onComplete,
+  isSaving,
+}: OnboardingFormProps) {
   return (
     <div className="space-y-4">
       <div className="text-center">
@@ -15,10 +18,7 @@ export default function OnboardingForm({ onComplete, isSaving }: OnboardingFormP
           Tell us about your preferences to get personalized recommendations
         </p>
       </div>
-      <PreferencesEditor
-        onSave={onComplete}
-        isSaving={isSaving}
-      />
+      <PreferencesEditor onSave={onComplete} isSaving={isSaving} />
     </div>
   );
 }

@@ -1,15 +1,25 @@
-import { useState, useEffect } from 'react';
-import { RenterPreferences } from '../../types/preferences';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { useEffect, useState } from "react";
+import type { RenterPreferences } from "../../types/preferences";
 
 const LIFESTYLE_OPTIONS = [
-  'nightlife', 'cafes', 'quiet', 'family-friendly', 'modern', 'affordable',
-  'central', 'green', 'shopping', 'restaurants', 'transport', 'community',
+  "nightlife",
+  "cafes",
+  "quiet",
+  "family-friendly",
+  "modern",
+  "affordable",
+  "central",
+  "green",
+  "shopping",
+  "restaurants",
+  "transport",
+  "community",
 ];
 
 interface PreferencesEditorProps {
@@ -25,34 +35,47 @@ export default function PreferencesEditor({
 }: PreferencesEditorProps) {
   const [budgetMin, setBudgetMin] = useState(15000);
   const [budgetMax, setBudgetMax] = useState(50000);
-  const [commuteArea, setCommuteArea] = useState('');
+  const [dailyActivityAreas, setDailyActivityAreas] = useState("");
   const [commuteMaxMinutes, setCommuteMaxMinutes] = useState(30);
   const [lifestyleTags, setLifestyleTags] = useState<string[]>([]);
+  const [mainTransportStyle, setMainTransportStyle] = useState("");
+  const [biggestDealBreaker, setBiggestDealBreaker] = useState("");
 
   useEffect(() => {
     if (initialPreferences) {
       setBudgetMin(initialPreferences.budgetMin);
       setBudgetMax(initialPreferences.budgetMax);
-      setCommuteArea(initialPreferences.commuteArea);
+      setDailyActivityAreas(initialPreferences.dailyActivityAreas.join(", "));
       setCommuteMaxMinutes(initialPreferences.commuteMaxMinutes);
       setLifestyleTags(initialPreferences.lifestyleTags);
+      setMainTransportStyle(initialPreferences.mainTransportStyle || "");
+      setBiggestDealBreaker(initialPreferences.biggestDealBreaker || "");
     }
   }, [initialPreferences]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Parse daily activity areas from comma-separated string
+    const areasArray = dailyActivityAreas
+      .split(",")
+      .map((area) => area.trim())
+      .filter((area) => area.length > 0);
+
     await onSave({
       budgetMin,
       budgetMax,
-      commuteArea,
+      dailyActivityAreas: areasArray,
       commuteMaxMinutes,
       lifestyleTags,
+      mainTransportStyle,
+      biggestDealBreaker,
     });
   };
 
   const toggleTag = (tag: string) => {
     setLifestyleTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
 
@@ -73,7 +96,9 @@ export default function PreferencesEditor({
                 <Label>Minimum Budget</Label>
                 <Slider
                   value={[budgetMin]}
-                  onValueChange={([value]) => setBudgetMin(Math.min(value, budgetMax - 5000))}
+                  onValueChange={([value]) =>
+                    setBudgetMin(Math.min(value, budgetMax - 5000))
+                  }
                   min={5000}
                   max={100000}
                   step={5000}
@@ -84,7 +109,9 @@ export default function PreferencesEditor({
                 <Label>Maximum Budget</Label>
                 <Slider
                   value={[budgetMax]}
-                  onValueChange={([value]) => setBudgetMax(Math.max(value, budgetMin + 5000))}
+                  onValueChange={([value]) =>
+                    setBudgetMax(Math.max(value, budgetMin + 5000))
+                  }
                   min={5000}
                   max={100000}
                   step={5000}
@@ -102,13 +129,16 @@ export default function PreferencesEditor({
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="commuteArea">Primary Work Area</Label>
+            <Label htmlFor="dailyActivityAreas">Daily activity areas</Label>
             <Input
-              id="commuteArea"
+              id="dailyActivityAreas"
               placeholder="e.g., Westlands, CBD, Upperhill"
-              value={commuteArea}
-              onChange={(e) => setCommuteArea(e.target.value)}
+              value={dailyActivityAreas}
+              onChange={(e) => setDailyActivityAreas(e.target.value)}
             />
+            <p className="text-xs text-muted-foreground">
+              Separate multiple areas with commas
+            </p>
           </div>
           <div className="space-y-2">
             <Label>Max Commute Time: {commuteMaxMinutes} minutes</Label>
@@ -119,6 +149,15 @@ export default function PreferencesEditor({
               max={60}
               step={5}
               className="mt-2"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="mainTransportStyle">Main transport style</Label>
+            <Input
+              id="mainTransportStyle"
+              placeholder="e.g., Car, Matatu, Uber, Walking"
+              value={mainTransportStyle}
+              onChange={(e) => setMainTransportStyle(e.target.value)}
             />
           </div>
         </CardContent>
@@ -137,8 +176,11 @@ export default function PreferencesEditor({
                   checked={lifestyleTags.includes(tag)}
                   onCheckedChange={() => toggleTag(tag)}
                 />
-                <Label htmlFor={tag} className="cursor-pointer text-sm capitalize">
-                  {tag.replace('-', ' ')}
+                <Label
+                  htmlFor={tag}
+                  className="cursor-pointer text-sm capitalize"
+                >
+                  {tag.replace("-", " ")}
                 </Label>
               </div>
             ))}
@@ -146,8 +188,23 @@ export default function PreferencesEditor({
         </CardContent>
       </Card>
 
+      <Card>
+        <CardHeader>
+          <CardTitle>Deal Breakers</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <Label htmlFor="biggestDealBreaker">Biggest deal breaker</Label>
+          <Input
+            id="biggestDealBreaker"
+            placeholder="e.g., No parking, Too noisy, Far from amenities"
+            value={biggestDealBreaker}
+            onChange={(e) => setBiggestDealBreaker(e.target.value)}
+          />
+        </CardContent>
+      </Card>
+
       <Button type="submit" className="w-full" disabled={isSaving}>
-        {isSaving ? 'Saving...' : 'Save Preferences'}
+        {isSaving ? "Saving..." : "Save Preferences"}
       </Button>
     </form>
   );

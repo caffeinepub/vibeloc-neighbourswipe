@@ -93,13 +93,30 @@ export interface ShortlistItem {
     savedAt: Time;
     neighbourhoodId: bigint;
 }
+export type Time = bigint;
+export interface SpaceListing {
+    id: bigint;
+    title: string;
+    postedBy: Principal;
+    createdAt: Time;
+    description: string;
+    neighbourhood: string;
+    spaceType: string;
+    price: bigint;
+}
 export interface Recommendation {
     neighbourhood: string;
     score: bigint;
 }
-export type Time = bigint;
 export interface OnboardingState {
     isComplete: boolean;
+}
+export interface SpaceListingInput {
+    title: string;
+    description: string;
+    neighbourhood: string;
+    spaceType: string;
+    price: bigint;
 }
 export interface UserProfile {
     name: string;
@@ -113,13 +130,17 @@ export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     clearShortlist(): Promise<void>;
+    deleteListing(id: bigint): Promise<void>;
+    getAllListings(): Promise<Array<SpaceListing>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
+    getListingsByNeighbourhood(neighbourhood: string): Promise<Array<SpaceListing>>;
     getOnboardingState(): Promise<OnboardingState>;
     getRecommendations(): Promise<Array<Recommendation>>;
     getShortlistedNeighbourhoods(): Promise<Array<ShortlistItem>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
+    postSpaceListing(input: SpaceListingInput): Promise<bigint>;
     removeFromShortlist(neighbourhoodId: bigint): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     savePreferences(_prefs: string): Promise<void>;
@@ -170,6 +191,34 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async deleteListing(arg0: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteListing(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteListing(arg0);
+            return result;
+        }
+    }
+    async getAllListings(): Promise<Array<SpaceListing>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllListings();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllListings();
+            return result;
+        }
+    }
     async getCallerUserProfile(): Promise<UserProfile | null> {
         if (this.processError) {
             try {
@@ -196,6 +245,20 @@ export class Backend implements backendInterface {
         } else {
             const result = await this.actor.getCallerUserRole();
             return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getListingsByNeighbourhood(arg0: string): Promise<Array<SpaceListing>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getListingsByNeighbourhood(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getListingsByNeighbourhood(arg0);
+            return result;
         }
     }
     async getOnboardingState(): Promise<OnboardingState> {
@@ -265,6 +328,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.isCallerAdmin();
+            return result;
+        }
+    }
+    async postSpaceListing(arg0: SpaceListingInput): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.postSpaceListing(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.postSpaceListing(arg0);
             return result;
         }
     }

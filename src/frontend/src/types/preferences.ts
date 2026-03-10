@@ -1,9 +1,11 @@
 export interface RenterPreferences {
   budgetMin: number;
   budgetMax: number;
-  commuteArea: string;
+  dailyActivityAreas: string[];
   commuteMaxMinutes: number;
   lifestyleTags: string[];
+  mainTransportStyle: string;
+  biggestDealBreaker: string;
 }
 
 export interface OnboardingCompletion {

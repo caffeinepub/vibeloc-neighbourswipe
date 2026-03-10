@@ -1,13 +1,15 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { RefreshCw, Settings } from 'lucide-react';
-import { Link } from '@tanstack/react-router';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "@tanstack/react-router";
+import { RefreshCw, Settings } from "lucide-react";
 
 interface DiscoverEmptyStateProps {
   onReset: () => void;
 }
 
-export default function DiscoverEmptyState({ onReset }: DiscoverEmptyStateProps) {
+export default function DiscoverEmptyState({
+  onReset,
+}: DiscoverEmptyStateProps) {
   return (
     <div className="container mx-auto max-w-md px-4 py-12">
       <Card>
@@ -16,9 +18,12 @@ export default function DiscoverEmptyState({ onReset }: DiscoverEmptyStateProps)
             <RefreshCw className="h-10 w-10 text-muted-foreground" />
           </div>
           <div>
-            <h3 className="text-xl font-bold">You've seen all neighbourhoods!</h3>
+            <h3 className="text-xl font-bold">
+              You've seen all neighbourhoods!
+            </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              You've reviewed all available neighbourhoods. Adjust your preferences or reset to see them again.
+              You've reviewed all available neighbourhoods. Adjust your
+              preferences or reset to see them again.
             </p>
           </div>
           <div className="space-y-3">

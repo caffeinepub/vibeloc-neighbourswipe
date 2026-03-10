@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
-import { Neighbourhood } from '../../types/neighbourhood';
-import NeighbourhoodCard from './NeighbourhoodCard';
-import { Button } from '@/components/ui/button';
-import { X, Heart } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Heart, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { Neighbourhood } from "../../types/neighbourhood";
+import NeighbourhoodCard from "./NeighbourhoodCard";
 
 interface SwipeDeckProps {
   neighbourhoods: Neighbourhood[];
@@ -10,7 +10,11 @@ interface SwipeDeckProps {
   onDislike: (neighbourhood: Neighbourhood) => void;
 }
 
-export default function SwipeDeck({ neighbourhoods, onLike, onDislike }: SwipeDeckProps) {
+export default function SwipeDeck({
+  neighbourhoods,
+  onLike,
+  onDislike,
+}: SwipeDeckProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -19,26 +23,26 @@ export default function SwipeDeck({ neighbourhoods, onLike, onDislike }: SwipeDe
 
   const currentNeighbourhood = neighbourhoods[currentIndex];
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentIndex < neighbourhoods.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+      setCurrentIndex((prev) => prev + 1);
       setDragOffset(0);
     }
-  };
+  }, [currentIndex, neighbourhoods.length]);
 
-  const handleLike = () => {
+  const handleLike = useCallback(() => {
     if (currentNeighbourhood) {
       onLike(currentNeighbourhood);
       handleNext();
     }
-  };
+  }, [currentNeighbourhood, onLike, handleNext]);
 
-  const handleDislike = () => {
+  const handleDislike = useCallback(() => {
     if (currentNeighbourhood) {
       onDislike(currentNeighbourhood);
       handleNext();
     }
-  };
+  }, [currentNeighbourhood, onDislike, handleNext]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true);
@@ -69,34 +73,34 @@ export default function SwipeDeck({ neighbourhoods, onLike, onDislike }: SwipeDe
     startXRef.current = e.clientX;
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging) return;
-    const diff = e.clientX - startXRef.current;
-    setDragOffset(diff);
-  };
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    setDragOffset(e.clientX - startXRef.current);
+  }, []);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-    if (Math.abs(dragOffset) > 100) {
-      if (dragOffset > 0) {
-        handleLike();
-      } else {
-        handleDislike();
+    setDragOffset((prev) => {
+      if (Math.abs(prev) > 100) {
+        if (prev > 0) {
+          handleLike();
+        } else {
+          handleDislike();
+        }
       }
-    }
-    setDragOffset(0);
-  };
+      return 0;
+    });
+  }, [handleLike, handleDislike]);
 
   useEffect(() => {
     if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
       return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
       };
     }
-  }, [isDragging, dragOffset]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   if (!currentNeighbourhood) {
     return null;
@@ -113,7 +117,7 @@ export default function SwipeDeck({ neighbourhoods, onLike, onDislike }: SwipeDe
         style={{
           transform: `translateX(${dragOffset}px) rotate(${rotation}deg)`,
           opacity: Math.max(opacity, 0.5),
-          cursor: isDragging ? 'grabbing' : 'grab',
+          cursor: isDragging ? "grabbing" : "grab",
         }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -121,13 +125,13 @@ export default function SwipeDeck({ neighbourhoods, onLike, onDislike }: SwipeDe
         onMouseDown={handleMouseDown}
       >
         <NeighbourhoodCard neighbourhood={currentNeighbourhood} />
-        
+
         {dragOffset > 50 && (
           <div className="absolute inset-0 flex items-center justify-center rounded-lg border-4 border-green-500 bg-green-500/20">
             <Heart className="h-24 w-24 text-green-500" fill="currentColor" />
           </div>
         )}
-        
+
         {dragOffset < -50 && (
           <div className="absolute inset-0 flex items-center justify-center rounded-lg border-4 border-red-500 bg-red-500/20">
             <X className="h-24 w-24 text-red-500" />

@@ -1,11 +1,19 @@
-import { RouterProvider, createRouter, createRootRoute, createRoute } from '@tanstack/react-router';
-import { ThemeProvider } from 'next-themes';
-import AppLayout from './components/layout/AppLayout';
-import OnboardingPage from './pages/OnboardingPage';
-import DiscoverPage from './pages/DiscoverPage';
-import ShortlistPage from './pages/ShortlistPage';
-import ProfilePreferencesPage from './pages/ProfilePreferencesPage';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from "@/components/ui/sonner";
+import {
+  RouterProvider,
+  createRootRoute,
+  createRoute,
+  createRouter,
+  redirect,
+} from "@tanstack/react-router";
+import { ThemeProvider } from "next-themes";
+import AppLayout from "./components/layout/AppLayout";
+import DiscoverPage from "./pages/DiscoverPage";
+import MatchesPage from "./pages/MatchesPage";
+import NeighbourhoodListingsPage from "./pages/NeighbourhoodListingsPage";
+import OnboardingPage from "./pages/OnboardingPage";
+import PostPage from "./pages/PostPage";
+import ProfilePreferencesPage from "./pages/ProfilePreferencesPage";
 
 const rootRoute = createRootRoute({
   component: AppLayout,
@@ -13,38 +21,62 @@ const rootRoute = createRootRoute({
 
 const onboardingRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/onboarding',
+  path: "/onboarding",
   component: OnboardingPage,
 });
 
 const discoverRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/',
+  path: "/",
   component: DiscoverPage,
 });
 
-const shortlistRoute = createRoute({
+// Redirect /shortlist → /matches for backward compat
+const shortlistRedirectRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/shortlist',
-  component: ShortlistPage,
+  path: "/shortlist",
+  beforeLoad: () => {
+    throw redirect({ to: "/matches" });
+  },
+});
+
+const matchesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/matches",
+  component: MatchesPage,
+});
+
+const neighbourhoodListingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/matches/$neighbourhoodName",
+  component: NeighbourhoodListingsPage,
+});
+
+const postRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/post",
+  component: PostPage,
 });
 
 const profileRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/profile',
+  path: "/profile",
   component: ProfilePreferencesPage,
 });
 
 const routeTree = rootRoute.addChildren([
   onboardingRoute,
   discoverRoute,
-  shortlistRoute,
+  shortlistRedirectRoute,
+  matchesRoute,
+  neighbourhoodListingsRoute,
+  postRoute,
   profileRoute,
 ]);
 
 const router = createRouter({ routeTree });
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }

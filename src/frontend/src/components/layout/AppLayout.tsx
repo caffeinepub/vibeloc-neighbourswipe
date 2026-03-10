@@ -1,6 +1,6 @@
-import { Outlet } from '@tanstack/react-router';
-import AppHeader from './AppHeader';
-import BottomNav from './BottomNav';
+import { Outlet } from "@tanstack/react-router";
+import AppHeader from "./AppHeader";
+import BottomNav from "./BottomNav";
 
 export default function AppLayout() {
   return (

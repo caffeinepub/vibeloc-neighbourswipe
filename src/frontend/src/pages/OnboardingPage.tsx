@@ -1,8 +1,8 @@
-import { useNavigate } from '@tanstack/react-router';
-import { usePreferences } from '../hooks/usePreferences';
-import OnboardingForm from '../components/onboarding/OnboardingForm';
-import { RenterPreferences } from '../types/preferences';
-import { toast } from 'sonner';
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+import OnboardingForm from "../components/onboarding/OnboardingForm";
+import { usePreferences } from "../hooks/usePreferences";
+import type { RenterPreferences } from "../types/preferences";
 
 export default function OnboardingPage() {
   const navigate = useNavigate();
@@ -11,10 +11,12 @@ export default function OnboardingPage() {
   const handleComplete = async (preferences: RenterPreferences) => {
     try {
       await savePreferences(preferences);
-      toast.success('Preferences saved! Let\'s find your perfect neighbourhood.');
-      navigate({ to: '/' });
+      toast.success(
+        "Preferences saved! Let's find your perfect neighbourhood.",
+      );
+      navigate({ to: "/" });
     } catch (error) {
-      toast.error('Failed to save preferences');
+      toast.error("Failed to save preferences");
       console.error(error);
     }
   };
@@ -23,7 +25,8 @@ export default function OnboardingPage() {
     <div
       className="min-h-[calc(100vh-8rem)] bg-cover bg-center"
       style={{
-        backgroundImage: 'url(/assets/generated/onboarding-background.dim_1080x1920.png)',
+        backgroundImage:
+          "url(/assets/generated/onboarding-background.dim_1080x1920.png)",
       }}
     >
       <div className="min-h-[calc(100vh-8rem)] bg-background/90 backdrop-blur-sm">

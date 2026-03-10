@@ -1,27 +1,32 @@
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useGetCallerUserProfile } from '../hooks/useQueries';
-import { usePreferences } from '../hooks/usePreferences';
-import AuthButton from '../components/auth/AuthButton';
-import ProfileSetupDialog from '../components/profile/ProfileSetupDialog';
-import PreferencesEditor from '../components/profile/PreferencesEditor';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { User } from 'lucide-react';
-import { toast } from 'sonner';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { User } from "lucide-react";
+import { toast } from "sonner";
+import AuthButton from "../components/auth/AuthButton";
+import PreferencesEditor from "../components/profile/PreferencesEditor";
+import ProfileSetupDialog from "../components/profile/ProfileSetupDialog";
+import { useInternetIdentity } from "../hooks/useInternetIdentity";
+import { usePreferences } from "../hooks/usePreferences";
+import { useGetCallerUserProfile } from "../hooks/useQueries";
 
 export default function ProfilePreferencesPage() {
-  const { identity, loginStatus } = useInternetIdentity();
-  const { data: userProfile, isLoading: profileLoading, isFetched } = useGetCallerUserProfile();
+  const { identity } = useInternetIdentity();
+  const {
+    data: userProfile,
+    isLoading: profileLoading,
+    isFetched,
+  } = useGetCallerUserProfile();
   const { preferences, savePreferences, isSaving } = usePreferences();
 
   const isAuthenticated = !!identity;
-  const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;
+  const showProfileSetup =
+    isAuthenticated && !profileLoading && isFetched && userProfile === null;
 
   const handleSavePreferences = async (newPreferences: any) => {
     try {
       await savePreferences(newPreferences);
-      toast.success('Preferences updated successfully!');
+      toast.success("Preferences updated successfully!");
     } catch (error) {
-      toast.error('Failed to update preferences');
+      toast.error("Failed to update preferences");
       console.error(error);
     }
   };
@@ -43,10 +48,12 @@ export default function ProfilePreferencesPage() {
                 </div>
                 <div>
                   <p className="font-medium">
-                    {isAuthenticated && userProfile ? userProfile.name : 'Guest'}
+                    {isAuthenticated && userProfile
+                      ? userProfile.name
+                      : "Guest"}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {isAuthenticated ? 'Signed in' : 'Not signed in'}
+                    {isAuthenticated ? "Signed in" : "Not signed in"}
                   </p>
                 </div>
               </div>
@@ -67,10 +74,12 @@ export default function ProfilePreferencesPage() {
 
       <footer className="mt-12 border-t border-border pt-6 text-center text-sm text-muted-foreground">
         <p>
-          © {new Date().getFullYear()} VibeLoc. Built with ❤️ using{' '}
+          © {new Date().getFullYear()} VibeLoc. Built with ❤️ using{" "}
           <a
             href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(
-              typeof window !== 'undefined' ? window.location.hostname : 'vibeloc'
+              typeof window !== "undefined"
+                ? window.location.hostname
+                : "vibeloc",
             )}`}
             target="_blank"
             rel="noopener noreferrer"

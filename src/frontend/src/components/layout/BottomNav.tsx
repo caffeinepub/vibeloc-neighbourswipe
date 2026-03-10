@@ -1,29 +1,51 @@
-import { Link, useRouterState } from '@tanstack/react-router';
-import { Home, Heart, User, Compass } from 'lucide-react';
+import { Link, useRouterState } from "@tanstack/react-router";
+import { Compass, Heart, Home, PlusSquare, User } from "lucide-react";
 
 export default function BottomNav() {
   const router = useRouterState();
   const currentPath = router.location.pathname;
 
   const navItems = [
-    { path: '/onboarding', icon: Compass, label: 'Start' },
-    { path: '/', icon: Home, label: 'Discover' },
-    { path: '/shortlist', icon: Heart, label: 'Shortlist' },
-    { path: '/profile', icon: User, label: 'Profile' },
+    {
+      path: "/onboarding",
+      icon: Compass,
+      label: "Start",
+      ocid: "nav.start_link",
+    },
+    { path: "/", icon: Home, label: "Discover", ocid: "nav.discover_link" },
+    {
+      path: "/matches",
+      icon: Heart,
+      label: "Matches",
+      ocid: "nav.matches_link",
+    },
+    { path: "/post", icon: PlusSquare, label: "Post", ocid: "nav.post_link" },
+    {
+      path: "/profile",
+      icon: User,
+      label: "Profile",
+      ocid: "nav.profile_link",
+    },
   ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 max-w-lg items-center justify-around px-4">
+      <div className="container mx-auto flex h-16 max-w-lg items-center justify-around px-2">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = currentPath === item.path;
+          const isActive =
+            item.path === "/"
+              ? currentPath === "/"
+              : currentPath.startsWith(item.path);
           return (
             <Link
               key={item.path}
               to={item.path}
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+              data-ocid={item.ocid}
+              className={`flex flex-col items-center gap-1 px-2 transition-colors ${
+                isActive
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <Icon className="h-5 w-5" />

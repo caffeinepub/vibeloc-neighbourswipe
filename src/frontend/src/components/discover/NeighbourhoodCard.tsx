@@ -1,13 +1,15 @@
-import { Neighbourhood } from '../../types/neighbourhood';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { MapPin } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin } from "lucide-react";
+import type { Neighbourhood } from "../../types/neighbourhood";
 
 interface NeighbourhoodCardProps {
   neighbourhood: Neighbourhood;
 }
 
-export default function NeighbourhoodCard({ neighbourhood }: NeighbourhoodCardProps) {
+export default function NeighbourhoodCard({
+  neighbourhood,
+}: NeighbourhoodCardProps) {
   const imageUrl = `/assets/generated/${neighbourhood.imageFilename}`;
 
   return (
@@ -30,14 +32,17 @@ export default function NeighbourhoodCard({ neighbourhood }: NeighbourhoodCardPr
       <CardContent className="space-y-4 p-6">
         <div>
           <p className="text-sm font-semibold text-primary">
-            KES {neighbourhood.rentMin.toLocaleString()} - {neighbourhood.rentMax.toLocaleString()}/month
+            KES {neighbourhood.rentMin.toLocaleString()} -{" "}
+            {neighbourhood.rentMax.toLocaleString()}/month
           </p>
-          <p className="mt-2 text-sm text-muted-foreground">{neighbourhood.description}</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {neighbourhood.description}
+          </p>
         </div>
         <div className="flex flex-wrap gap-2">
           {neighbourhood.tags.slice(0, 5).map((tag) => (
             <Badge key={tag} variant="secondary" className="capitalize">
-              {tag.replace('-', ' ')}
+              {tag.replace("-", " ")}
             </Badge>
           ))}
         </div>

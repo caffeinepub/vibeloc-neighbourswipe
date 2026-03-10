@@ -1,8 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useActor } from './useActor';
-import { useInternetIdentity } from './useInternetIdentity';
-import { RenterPreferences } from '../types/preferences';
-import { PreferencesStorage } from '../services/preferencesStorage';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { PreferencesStorage } from "../services/preferencesStorage";
+import type { RenterPreferences } from "../types/preferences";
+import { useActor } from "./useActor";
+import { useInternetIdentity } from "./useInternetIdentity";
 
 export function usePreferences() {
   const { actor } = useActor();
@@ -13,13 +13,13 @@ export function usePreferences() {
   const storage = new PreferencesStorage(actor, isAuthenticated);
 
   const preferencesQuery = useQuery({
-    queryKey: ['preferences', identity?.getPrincipal().toString()],
+    queryKey: ["preferences", identity?.getPrincipal().toString()],
     queryFn: () => storage.getPreferences(),
     staleTime: 5 * 60 * 1000,
   });
 
   const onboardingQuery = useQuery({
-    queryKey: ['onboardingComplete', identity?.getPrincipal().toString()],
+    queryKey: ["onboardingComplete", identity?.getPrincipal().toString()],
     queryFn: () => storage.getOnboardingComplete(),
     staleTime: 5 * 60 * 1000,
   });
@@ -30,8 +30,8 @@ export function usePreferences() {
       storage.setLocalOnboardingComplete(true);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['preferences'] });
-      queryClient.invalidateQueries({ queryKey: ['onboardingComplete'] });
+      queryClient.invalidateQueries({ queryKey: ["preferences"] });
+      queryClient.invalidateQueries({ queryKey: ["onboardingComplete"] });
     },
   });
 

@@ -1,7 +1,7 @@
-import { Neighbourhood } from '../types/neighbourhood';
+import { Neighbourhood } from "../types/neighbourhood";
 
-const LIKES_KEY = 'vibeloc_likes';
-const DISLIKES_KEY = 'vibeloc_dislikes';
+const LIKES_KEY = "vibeloc_likes";
+const DISLIKES_KEY = "vibeloc_dislikes";
 
 export class SwipeStorage {
   private actor: any;
@@ -18,7 +18,7 @@ export class SwipeStorage {
         const items = await this.actor.getShortlistedNeighbourhoods();
         return items.map((item: any) => Number(item.neighbourhoodId));
       } catch (error) {
-        console.error('Error fetching shortlist:', error);
+        console.error("Error fetching shortlist:", error);
         return this.getLocalLikes();
       }
     }
@@ -36,7 +36,7 @@ export class SwipeStorage {
       try {
         await this.actor.shortlistNeighbourhood(BigInt(neighbourhoodId));
       } catch (error) {
-        console.error('Error adding to shortlist:', error);
+        console.error("Error adding to shortlist:", error);
       }
     }
   }
@@ -49,7 +49,7 @@ export class SwipeStorage {
       try {
         await this.actor.removeFromShortlist(BigInt(neighbourhoodId));
       } catch (error) {
-        console.error('Error removing from shortlist:', error);
+        console.error("Error removing from shortlist:", error);
       }
     }
   }
@@ -75,7 +75,7 @@ export class SwipeStorage {
       try {
         await this.actor.clearShortlist();
       } catch (error) {
-        console.error('Error clearing shortlist:', error);
+        console.error("Error clearing shortlist:", error);
       }
     }
   }

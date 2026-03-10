@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link } from "@tanstack/react-router";
 
 export default function AppHeader() {
   return (
@@ -11,8 +11,12 @@ export default function AppHeader() {
             className="h-10 w-10"
           />
           <div className="flex flex-col">
-            <span className="text-lg font-bold leading-none text-foreground">VibeLoc</span>
-            <span className="text-xs text-muted-foreground">NeighbourSwipe</span>
+            <span className="text-lg font-bold leading-none text-foreground">
+              VibeLoc
+            </span>
+            <span className="text-xs text-muted-foreground">
+              NeighbourSwipe
+            </span>
           </div>
         </Link>
       </div>
