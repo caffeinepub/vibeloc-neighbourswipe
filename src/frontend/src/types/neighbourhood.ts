@@ -2,6 +2,7 @@ export interface Neighbourhood {
   id: number;
   name: string;
   description: string;
+  vibeSummary: string;
   rentMin: number;
   rentMax: number;
   commuteNote: string;

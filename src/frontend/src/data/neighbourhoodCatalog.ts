@@ -6,6 +6,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Kilimani",
     description:
       "Vibrant urban hub with cafes, nightlife, and modern apartments. Perfect for young professionals.",
+    vibeSummary:
+      "Where the city buzzes loudest — rooftop bars, art cafes, and Friday nights that last till sunrise.",
     rentMin: 25000,
     rentMax: 60000,
     commuteNote: "15 min to Westlands, 20 min to CBD",
@@ -17,6 +19,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Westlands",
     description:
       "Business district with excellent amenities, restaurants, and entertainment. Great connectivity.",
+    vibeSummary:
+      "Nairobi's beating commercial heart — deals get done by day, dinner dates happen by night.",
     rentMin: 30000,
     rentMax: 80000,
     commuteNote: "10 min to CBD, near major offices",
@@ -28,6 +32,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Ngong Road",
     description:
       "Affordable and accessible with good public transport. Mix of residential and commercial.",
+    vibeSummary:
+      "The people's corridor — always in motion, always affordable, always connected.",
     rentMin: 15000,
     rentMax: 35000,
     commuteNote: "25 min to CBD, excellent matatu routes",
@@ -45,6 +51,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Lavington",
     description:
       "Quiet, leafy suburb with spacious homes. Family-friendly with good schools nearby.",
+    vibeSummary:
+      "Shaded lanes, birdsong mornings, and enough space for the kids to actually run.",
     rentMin: 40000,
     rentMax: 100000,
     commuteNote: "20 min to Westlands, 30 min to CBD",
@@ -56,6 +64,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Parklands",
     description:
       "Diverse community with great food scene and cultural mix. Affordable and lively.",
+    vibeSummary:
+      "A melting pot of flavours, faiths, and faces — every street tells a different story.",
     rentMin: 20000,
     rentMax: 45000,
     commuteNote: "15 min to Westlands, 25 min to CBD",
@@ -67,6 +77,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Kileleshwa",
     description:
       "Upscale residential area with modern apartments and good security. Close to amenities.",
+    vibeSummary:
+      "Quiet money, smart apartments, and a lifestyle that feels effortlessly put-together.",
     rentMin: 35000,
     rentMax: 75000,
     commuteNote: "15 min to Westlands, 20 min to CBD",
@@ -78,6 +90,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "South B",
     description:
       "Established neighborhood with good infrastructure. Mix of apartments and standalone houses.",
+    vibeSummary:
+      "Old-school Nairobi charm with solid bones — your neighbours know your name here.",
     rentMin: 18000,
     rentMax: 40000,
     commuteNote: "20 min to CBD, near airport",
@@ -95,6 +109,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Kasarani",
     description:
       "Growing area with affordable housing and improving amenities. Good for budget-conscious renters.",
+    vibeSummary:
+      "A neighbourhood on the rise — budget-friendly today, full of potential tomorrow.",
     rentMin: 12000,
     rentMax: 30000,
     commuteNote: "35 min to CBD, Thika Road access",
@@ -106,6 +122,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Upperhill",
     description:
       "Modern business district with high-rise apartments. Walking distance to hospitals and offices.",
+    vibeSummary:
+      "Skyline views, hospital halls, and boardrooms — for those who mean serious business.",
     rentMin: 35000,
     rentMax: 90000,
     commuteNote: "10 min to CBD, walkable to many offices",
@@ -117,6 +135,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Ruaka",
     description:
       "Fast-growing suburb with new developments. Good value for space, popular with young families.",
+    vibeSummary:
+      "Fresh estates, young energy, and more space for your money than anywhere near the city.",
     rentMin: 18000,
     rentMax: 45000,
     commuteNote: "30 min to Westlands, 40 min to CBD",
@@ -134,6 +154,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Langata",
     description:
       "Serene area near national park. Great for nature lovers seeking peace close to the city.",
+    vibeSummary:
+      "Lions at your back fence, Nairobi in front — urban life meets untamed wilderness.",
     rentMin: 25000,
     rentMax: 60000,
     commuteNote: "30 min to CBD, near Nairobi National Park",
@@ -145,6 +167,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Embakasi",
     description:
       "Industrial and residential mix with affordable options. Near airport and industrial area.",
+    vibeSummary:
+      "Gritty, hustling, and proudly unfiltered — the real engine room of Nairobi's economy.",
     rentMin: 10000,
     rentMax: 25000,
     commuteNote: "25 min to CBD, near airport",
@@ -162,6 +186,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Kitengela",
     description:
       "Fast-growing commuter town in Kajiado with affordable housing and new estates. Family-friendly with strong transport links.",
+    vibeSummary:
+      "Savanna edge living — space, sunsets, and affordable acres for the whole family.",
     rentMin: 8000,
     rentMax: 25000,
     commuteNote: "50 min to CBD via Namanga Road",
@@ -179,6 +205,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Kiambu Region",
     description:
       "Close to Nairobi, greener and quieter with mix of modern apartments and older suburbs. Popular with young professionals.",
+    vibeSummary:
+      "Cool highland air, coffee farm views, and a pace of life that lets you actually breathe.",
     rentMin: 15000,
     rentMax: 40000,
     commuteNote: "35 min to CBD, 25 min to Westlands",
@@ -190,6 +218,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Thika",
     description:
       "Larger town with solid infrastructure and affordable rentals. Good access via Thika Superhighway with strong commercial activity.",
+    vibeSummary:
+      "Industrial hustle meets small-town warmth — a town that works hard and lives well.",
     rentMin: 10000,
     rentMax: 30000,
     commuteNote: "45 min to CBD via Thika Superhighway",
@@ -207,6 +237,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Eastlands (Umoja, Donholm, Buruburu)",
     description:
       "Densely populated with vibrant local culture and convenient transport. Lots of commercial spots and markets.",
+    vibeSummary:
+      "The soul of Nairobi — loud, proud, and full of life from the first matatu to the last nyama choma.",
     rentMin: 12000,
     rentMax: 35000,
     commuteNote: "25 min to CBD, excellent matatu routes",
@@ -218,6 +250,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Ruai",
     description:
       "Emerging low-density area with affordable land and expanding infrastructure. Attracting first-time homeowners.",
+    vibeSummary:
+      "Wide open plots and fresh starts — where Nairobi's next generation is planting roots.",
     rentMin: 8000,
     rentMax: 20000,
     commuteNote: "40 min to CBD via Eastern Bypass",
@@ -229,6 +263,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Utawala",
     description:
       "Rapidly growing suburb along Eastern Bypass with modern estates. Good connectivity and popular with families.",
+    vibeSummary:
+      "New roads, new neighbours, new beginnings — Utawala is Nairobi growing up fast.",
     rentMin: 12000,
     rentMax: 30000,
     commuteNote: "35 min to CBD via Eastern Bypass",
@@ -240,6 +276,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Syokimau",
     description:
       "Modern suburb with SGR station access and new developments. Great for commuters seeking value and convenience.",
+    vibeSummary:
+      "Hop on the SGR at dawn and be at your desk before Nairobi fully wakes up.",
     rentMin: 15000,
     rentMax: 35000,
     commuteNote: "30 min to CBD via SGR or Mombasa Road",
@@ -257,6 +295,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Athi River",
     description:
       "Industrial town with affordable housing options. Good for those working in nearby factories and EPZ.",
+    vibeSummary:
+      "Factory smoke at dawn, quiet evenings — practical, affordable, and closer to work than you think.",
     rentMin: 8000,
     rentMax: 22000,
     commuteNote: "45 min to CBD via Mombasa Road",
@@ -274,6 +314,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Rongai",
     description:
       "Affordable commuter town with growing amenities and good transport links. Popular with budget-conscious renters.",
+    vibeSummary:
+      "Nairobi's best-kept secret — where rent is low, the air is clean, and everyone has a plot story.",
     rentMin: 10000,
     rentMax: 25000,
     commuteNote: "40 min to CBD via Magadi Road",
@@ -291,6 +333,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Ngong",
     description:
       "Scenic town with cooler climate and spacious properties. Great for those seeking peace and nature near the city.",
+    vibeSummary:
+      "Misty hills, horse trails, and a cool breeze that makes you forget you're 30km from Nairobi.",
     rentMin: 12000,
     rentMax: 35000,
     commuteNote: "45 min to CBD via Ngong Road",
@@ -302,6 +346,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Ruiru",
     description:
       "Fast-growing town along Thika Road with affordable housing and improving infrastructure. Good for families and commuters.",
+    vibeSummary:
+      "Thika Road speed meets small-town community — a smart pick for families thinking long-term.",
     rentMin: 10000,
     rentMax: 28000,
     commuteNote: "35 min to CBD via Thika Superhighway",
@@ -319,6 +365,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Kamulu",
     description:
       "Emerging residential area with affordable options and expanding amenities. Good for budget-conscious families.",
+    vibeSummary:
+      "Off the beaten path but not off the map — Kamulu rewards those who get in early.",
     rentMin: 8000,
     rentMax: 20000,
     commuteNote: "40 min to CBD via Kangundo Road",
@@ -336,6 +384,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Joska",
     description:
       "Quiet, low-density area with affordable land and housing. Ideal for first-time homeowners seeking space.",
+    vibeSummary:
+      "Quiet enough to hear yourself think, affordable enough to finally own your own space.",
     rentMin: 7000,
     rentMax: 18000,
     commuteNote: "50 min to CBD via Kangundo Road",
@@ -347,6 +397,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Kahawa West",
     description:
       "Growing residential area with good transport links and affordable housing. Popular with young professionals and families.",
+    vibeSummary:
+      "University energy meets neighbourhood calm — young, connected, and always on the move.",
     rentMin: 12000,
     rentMax: 30000,
     commuteNote: "30 min to CBD via Thika Road",
@@ -358,6 +410,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Zimmerman",
     description:
       "Established residential area with good amenities and transport. Mix of apartments and standalone houses.",
+    vibeSummary:
+      "Steady, reliable, and refreshingly drama-free — the neighbourhood that just works.",
     rentMin: 15000,
     rentMax: 35000,
     commuteNote: "30 min to CBD via Thika Road",
@@ -369,6 +423,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Embakasi South (Pipeline, Imara Daima)",
     description:
       "Vibrant area near airport with good transport links and affordable housing. Mix of residential and commercial.",
+    vibeSummary:
+      "Jets overhead, matatus below — if you're always going somewhere, you'll love it here.",
     rentMin: 12000,
     rentMax: 30000,
     commuteNote: "20 min to CBD, near airport",
@@ -380,6 +436,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "South C",
     description:
       "Established middle-class neighborhood with good infrastructure and amenities. Close to CBD and airport.",
+    vibeSummary:
+      "Middle-class Nairobi at its finest — solid, central, and close to everything that matters.",
     rentMin: 20000,
     rentMax: 50000,
     commuteNote: "15 min to CBD, near airport",
@@ -397,6 +455,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Tatu City",
     description:
       "Modern smart city with cutting-edge infrastructure and amenities. Planned community with schools, offices, and retail.",
+    vibeSummary:
+      "This is what Nairobi's future looks like — planned, connected, and built for people who think ahead.",
     rentMin: 25000,
     rentMax: 70000,
     commuteNote: "35 min to CBD via Thika Road",
@@ -414,6 +474,8 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     name: "Northlands",
     description:
       "Emerging smart city development with modern infrastructure and planned amenities. Future-focused community.",
+    vibeSummary:
+      "A blank canvas turning into a masterpiece — move in now before the rest of Nairobi catches on.",
     rentMin: 20000,
     rentMax: 60000,
     commuteNote: "40 min to CBD via Thika Road",

@@ -20,11 +20,18 @@ export default function NeighbourhoodCard({
           alt={neighbourhood.name}
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-          <h3 className="text-3xl font-bold">{neighbourhood.name}</h3>
-          <div className="mt-2 flex items-center gap-1 text-sm">
-            <MapPin className="h-4 w-4" />
+          <h3 className="text-3xl font-bold leading-tight">
+            {neighbourhood.name}
+          </h3>
+          {neighbourhood.vibeSummary && (
+            <p className="mt-1 text-sm italic text-white/85 leading-snug">
+              {neighbourhood.vibeSummary}
+            </p>
+          )}
+          <div className="mt-3 flex items-center gap-1 text-xs text-white/70">
+            <MapPin className="h-3.5 w-3.5" />
             <span>{neighbourhood.commuteNote}</span>
           </div>
         </div>
@@ -32,7 +39,7 @@ export default function NeighbourhoodCard({
       <CardContent className="space-y-4 p-6">
         <div>
           <p className="text-sm font-semibold text-primary">
-            KES {neighbourhood.rentMin.toLocaleString()} -{" "}
+            KES {neighbourhood.rentMin.toLocaleString()} —{" "}
             {neighbourhood.rentMax.toLocaleString()}/month
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
