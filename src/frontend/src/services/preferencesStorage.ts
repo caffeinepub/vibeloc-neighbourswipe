@@ -81,6 +81,7 @@ export class PreferencesStorage {
         lifestyleTags: stored.lifestyleTags || [],
         mainTransportStyle: stored.mainTransportStyle || "",
         biggestDealBreaker: stored.biggestDealBreaker || "",
+        workType: stored.workType || "",
       };
     }
 
@@ -93,6 +94,7 @@ export class PreferencesStorage {
       lifestyleTags: stored.lifestyleTags || [],
       mainTransportStyle: stored.mainTransportStyle || "",
       biggestDealBreaker: stored.biggestDealBreaker || "",
+      workType: stored.workType || "",
     };
   }
 

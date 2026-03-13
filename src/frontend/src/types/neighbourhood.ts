@@ -8,4 +8,8 @@ export interface Neighbourhood {
   commuteNote: string;
   tags: string[];
   imageFilename: string;
+  lat: number;
+  lng: number;
+  landmarks: string[];
+  transportOptions: string[];
 }

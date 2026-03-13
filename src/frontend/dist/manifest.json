@@ -1,0 +1,25 @@
+{
+  "name": "VibeLoc — NeighbourSwipe",
+  "short_name": "VibeLoc",
+  "description": "Swipe-based neighbourhood discovery for Nairobi renters",
+  "theme_color": "#6d28d9",
+  "background_color": "#0f0f1a",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/generated/vibeloc-icon-192.dim_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/generated/vibeloc-icon-512.dim_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

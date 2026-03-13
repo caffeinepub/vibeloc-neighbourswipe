@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { ThemeProvider } from "next-themes";
 import AppLayout from "./components/layout/AppLayout";
+import AdminPage from "./pages/AdminPage";
 import DiscoverPage from "./pages/DiscoverPage";
 import MatchesPage from "./pages/MatchesPage";
 import NeighbourhoodListingsPage from "./pages/NeighbourhoodListingsPage";
@@ -64,6 +65,12 @@ const profileRoute = createRoute({
   component: ProfilePreferencesPage,
 });
 
+const adminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/admin",
+  component: AdminPage,
+});
+
 const routeTree = rootRoute.addChildren([
   onboardingRoute,
   discoverRoute,
@@ -72,6 +79,7 @@ const routeTree = rootRoute.addChildren([
   neighbourhoodListingsRoute,
   postRoute,
   profileRoute,
+  adminRoute,
 ]);
 
 const router = createRouter({ routeTree });

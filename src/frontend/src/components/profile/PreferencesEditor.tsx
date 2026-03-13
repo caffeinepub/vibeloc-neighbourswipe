@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import type { RenterPreferences } from "../../types/preferences";
 
@@ -20,6 +21,15 @@ const LIFESTYLE_OPTIONS = [
   "restaurants",
   "transport",
   "community",
+];
+
+const WORK_TYPE_OPTIONS = [
+  "Remote",
+  "Gig Worker",
+  "Formal Employment",
+  "Informal / Self-employed",
+  "Student",
+  "Business Owner",
 ];
 
 interface PreferencesEditorProps {
@@ -40,6 +50,7 @@ export default function PreferencesEditor({
   const [lifestyleTags, setLifestyleTags] = useState<string[]>([]);
   const [mainTransportStyle, setMainTransportStyle] = useState("");
   const [biggestDealBreaker, setBiggestDealBreaker] = useState("");
+  const [workType, setWorkType] = useState("");
 
   useEffect(() => {
     if (initialPreferences) {
@@ -50,13 +61,12 @@ export default function PreferencesEditor({
       setLifestyleTags(initialPreferences.lifestyleTags);
       setMainTransportStyle(initialPreferences.mainTransportStyle || "");
       setBiggestDealBreaker(initialPreferences.biggestDealBreaker || "");
+      setWorkType(initialPreferences.workType || "");
     }
   }, [initialPreferences]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Parse daily activity areas from comma-separated string
     const areasArray = dailyActivityAreas
       .split(",")
       .map((area) => area.trim())
@@ -70,6 +80,7 @@ export default function PreferencesEditor({
       lifestyleTags,
       mainTransportStyle,
       biggestDealBreaker,
+      workType,
     });
   };
 
@@ -125,6 +136,35 @@ export default function PreferencesEditor({
 
       <Card>
         <CardHeader>
+          <CardTitle>Type of Work</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-3 text-sm text-muted-foreground">
+            Helps us match you to the right neighbourhood vibe
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {WORK_TYPE_OPTIONS.map((option) => (
+              <button
+                key={option}
+                type="button"
+                data-ocid="preferences.work_type.toggle"
+                onClick={() => setWorkType(workType === option ? "" : option)}
+                className={cn(
+                  "rounded-xl border-2 px-3 py-2.5 text-sm font-medium transition-all",
+                  workType === option
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-background text-foreground hover:border-primary/50",
+                )}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>Commute Preferences</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -132,6 +172,7 @@ export default function PreferencesEditor({
             <Label htmlFor="dailyActivityAreas">Daily activity areas</Label>
             <Input
               id="dailyActivityAreas"
+              data-ocid="preferences.daily_areas.input"
               placeholder="e.g., Westlands, CBD, Upperhill"
               value={dailyActivityAreas}
               onChange={(e) => setDailyActivityAreas(e.target.value)}
@@ -155,6 +196,7 @@ export default function PreferencesEditor({
             <Label htmlFor="mainTransportStyle">Main transport style</Label>
             <Input
               id="mainTransportStyle"
+              data-ocid="preferences.transport.input"
               placeholder="e.g., Car, Matatu, Uber, Walking"
               value={mainTransportStyle}
               onChange={(e) => setMainTransportStyle(e.target.value)}
@@ -196,6 +238,7 @@ export default function PreferencesEditor({
           <Label htmlFor="biggestDealBreaker">Biggest deal breaker</Label>
           <Input
             id="biggestDealBreaker"
+            data-ocid="preferences.deal_breaker.input"
             placeholder="e.g., No parking, Too noisy, Far from amenities"
             value={biggestDealBreaker}
             onChange={(e) => setBiggestDealBreaker(e.target.value)}
@@ -203,7 +246,12 @@ export default function PreferencesEditor({
         </CardContent>
       </Card>
 
-      <Button type="submit" className="w-full" disabled={isSaving}>
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={isSaving}
+        data-ocid="preferences.submit_button"
+      >
         {isSaving ? "Saving..." : "Save Preferences"}
       </Button>
     </form>

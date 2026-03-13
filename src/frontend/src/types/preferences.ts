@@ -6,6 +6,7 @@ export interface RenterPreferences {
   lifestyleTags: string[];
   mainTransportStyle: string;
   biggestDealBreaker: string;
+  workType: string;
 }
 
 export interface OnboardingCompletion {

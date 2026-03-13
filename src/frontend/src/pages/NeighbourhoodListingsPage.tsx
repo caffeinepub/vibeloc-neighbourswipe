@@ -10,6 +10,7 @@ import {
   Laptop,
   Leaf,
   MapPin,
+  MessageCircle,
   Trash2,
   Users,
 } from "lucide-react";
@@ -21,6 +22,14 @@ import {
   useDeleteListing,
   useListingsByNeighbourhood,
 } from "../hooks/useQueries";
+
+const WHATSAPP_KEY = "vibeloc_whatsapp_number";
+
+function getWhatsAppNumber(): string {
+  const stored = localStorage.getItem(WHATSAPP_KEY);
+  if (stored) return stored.replace(/\D/g, "");
+  return "254700000000";
+}
 
 type SpaceFilter =
   | "All"
@@ -66,6 +75,17 @@ function formatPrice(listing: SpaceListing): string {
     default:
       return `${amount}/mo`;
   }
+}
+
+function buildWhatsAppUrl(
+  listing: SpaceListing,
+  neighbourhood: string,
+): string {
+  const number = getWhatsAppNumber();
+  const text = encodeURIComponent(
+    `Hi VibeLoc, I'd like to enquire about this listing:\n\n*${listing.title}*\nType: ${listing.spaceType}\nPrice: ${formatPrice(listing)}\nNeighbourhood: ${neighbourhood}\n\nPlease assist with verification and next steps.`,
+  );
+  return `https://wa.me/${number}?text=${text}`;
 }
 
 function spaceTypeBadgeClass(spaceType: string): string {
@@ -184,7 +204,7 @@ export default function NeighbourhoodListingsPage() {
         </div>
       </div>
 
-      {/* Filter tabs - scrollable pill row for all 8 options */}
+      {/* Filter tabs */}
       <div className="container mx-auto max-w-lg px-4 py-3">
         <div
           data-ocid="listings.filter.tab"
@@ -247,7 +267,7 @@ export default function NeighbourhoodListingsPage() {
         {!isLoading && !isError && filteredListings.length === 0 && (
           <div data-ocid="listings.empty_state" className="py-16 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted text-3xl">
-              \uD83C\uDFD8\uFE0F
+              🏘️
             </div>
             <h3 className="text-base font-semibold">
               {filter === "All"
@@ -327,6 +347,23 @@ export default function NeighbourhoodListingsPage() {
                             : truncatePrincipal(listing.postedBy.toString())}
                         </span>
                       </span>
+                      {!isOwner && (
+                        <a
+                          href={buildWhatsAppUrl(listing, neighbourhoodName)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-ocid={`listings.enquire_button.${idx + 1}`}
+                        >
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="h-7 gap-1.5 border-green-500 text-green-600 hover:bg-green-50 hover:text-green-700 text-xs"
+                          >
+                            <MessageCircle className="h-3.5 w-3.5" />
+                            Enquire
+                          </Button>
+                        </a>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

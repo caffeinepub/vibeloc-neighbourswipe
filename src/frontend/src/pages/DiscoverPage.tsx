@@ -1,11 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import DiscoverEmptyState from "../components/discover/DiscoverEmptyState";
 import SwipeDeck from "../components/discover/SwipeDeck";
 import { usePreferences } from "../hooks/usePreferences";
 import { useShortlist, useSwipeFeed } from "../hooks/useShortlist";
-import { getRecommendations } from "../services/recommendations";
+import { getScoredRecommendations } from "../services/recommendations";
 import type { Neighbourhood } from "../types/neighbourhood";
 
 export default function DiscoverPage() {
@@ -21,7 +21,24 @@ export default function DiscoverPage() {
     }
   }, [onboardingComplete, isLoadingOnboarding, navigate]);
 
-  const recommendations = getRecommendations(preferences ?? null, swipedIds);
+  const scoredRecommendations = useMemo(
+    () => getScoredRecommendations(preferences ?? null, swipedIds),
+    [preferences, swipedIds],
+  );
+
+  const recommendations = scoredRecommendations.map(
+    (item) => item.neighbourhood,
+  );
+
+  const matchReasonsByIndex = useMemo(() => {
+    const result: Record<number, string[]> = {};
+    scoredRecommendations.forEach((item, idx) => {
+      if (item.matchReasons.length > 0) {
+        result[idx] = item.matchReasons;
+      }
+    });
+    return result;
+  }, [scoredRecommendations]);
 
   const handleLike = async (neighbourhood: Neighbourhood) => {
     try {
@@ -34,7 +51,7 @@ export default function DiscoverPage() {
   };
 
   const handleDislike = (_neighbourhood: Neighbourhood) => {
-    // Dislike is handled by the swipe storage automatically
+    // Dislike handled by swipe storage automatically
   };
 
   const handleReset = async () => {
@@ -65,17 +82,18 @@ export default function DiscoverPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6 text-center">
+    <div className="container mx-auto px-4 py-4">
+      <div className="mb-3 text-center">
         <h1 className="text-2xl font-bold">Discover Neighbourhoods</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Swipe right to like, left to pass
+          Swipe cards or tap the buttons below
         </p>
       </div>
       <SwipeDeck
         neighbourhoods={recommendations}
         onLike={handleLike}
         onDislike={handleDislike}
+        matchReasonsByIndex={matchReasonsByIndex}
       />
     </div>
   );

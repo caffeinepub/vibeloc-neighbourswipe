@@ -1,9 +1,11 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Compass, Heart, Home, PlusSquare, User } from "lucide-react";
+import { Compass, Heart, Home, PlusSquare, Shield, User } from "lucide-react";
+import { useIsAdmin } from "../../hooks/useAdmin";
 
 export default function BottomNav() {
   const router = useRouterState();
   const currentPath = router.location.pathname;
+  const { isAdmin } = useIsAdmin();
 
   const navItems = [
     {
@@ -53,6 +55,22 @@ export default function BottomNav() {
             </Link>
           );
         })}
+
+        {/* Admin tab — only visible to admins */}
+        {isAdmin && (
+          <Link
+            to="/admin"
+            data-ocid="nav.admin_link"
+            className={`flex flex-col items-center gap-1 px-2 transition-colors ${
+              currentPath.startsWith("/admin")
+                ? "text-primary"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Shield className="h-5 w-5" />
+            <span className="text-xs font-medium">Admin</span>
+          </Link>
+        )}
       </div>
     </nav>
   );
