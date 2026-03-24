@@ -24,6 +24,17 @@ export const SpaceListing = IDL.Record({
   'spaceType' : IDL.Text,
   'price' : IDL.Nat,
 });
+export const PulsePost = IDL.Record({
+  'id' : IDL.Nat,
+  'postType' : IDL.Text,
+  'title' : IDL.Text,
+  'postedBy' : IDL.Principal,
+  'createdAt' : Time,
+  'description' : IDL.Text,
+  'neighbourhood' : IDL.Text,
+  'category' : IDL.Text,
+  'eventDate' : IDL.Opt(IDL.Text),
+});
 export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 export const OnboardingState = IDL.Record({ 'isComplete' : IDL.Bool });
 export const Recommendation = IDL.Record({
@@ -33,6 +44,14 @@ export const Recommendation = IDL.Record({
 export const ShortlistItem = IDL.Record({
   'savedAt' : Time,
   'neighbourhoodId' : IDL.Nat,
+});
+export const PulsePostInput = IDL.Record({
+  'postType' : IDL.Text,
+  'title' : IDL.Text,
+  'description' : IDL.Text,
+  'neighbourhood' : IDL.Text,
+  'category' : IDL.Text,
+  'eventDate' : IDL.Opt(IDL.Text),
 });
 export const SpaceListingInput = IDL.Record({
   'title' : IDL.Text,
@@ -47,7 +66,9 @@ export const idlService = IDL.Service({
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'clearShortlist' : IDL.Func([], [], []),
   'deleteListing' : IDL.Func([IDL.Nat], [], []),
+  'deletePulse' : IDL.Func([IDL.Nat], [], []),
   'getAllListings' : IDL.Func([], [IDL.Vec(SpaceListing)], ['query']),
+  'getAllPulses' : IDL.Func([], [IDL.Vec(PulsePost)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getListingsByNeighbourhood' : IDL.Func(
@@ -56,6 +77,11 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'getOnboardingState' : IDL.Func([], [OnboardingState], ['query']),
+  'getPulsesByNeighbourhood' : IDL.Func(
+      [IDL.Text],
+      [IDL.Vec(PulsePost)],
+      ['query'],
+    ),
   'getRecommendations' : IDL.Func([], [IDL.Vec(Recommendation)], ['query']),
   'getShortlistedNeighbourhoods' : IDL.Func(
       [],
@@ -68,6 +94,7 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'postPulse' : IDL.Func([PulsePostInput], [IDL.Nat], []),
   'postSpaceListing' : IDL.Func([SpaceListingInput], [IDL.Nat], []),
   'removeFromShortlist' : IDL.Func([IDL.Nat], [], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
@@ -94,6 +121,17 @@ export const idlFactory = ({ IDL }) => {
     'spaceType' : IDL.Text,
     'price' : IDL.Nat,
   });
+  const PulsePost = IDL.Record({
+    'id' : IDL.Nat,
+    'postType' : IDL.Text,
+    'title' : IDL.Text,
+    'postedBy' : IDL.Principal,
+    'createdAt' : Time,
+    'description' : IDL.Text,
+    'neighbourhood' : IDL.Text,
+    'category' : IDL.Text,
+    'eventDate' : IDL.Opt(IDL.Text),
+  });
   const UserProfile = IDL.Record({ 'name' : IDL.Text });
   const OnboardingState = IDL.Record({ 'isComplete' : IDL.Bool });
   const Recommendation = IDL.Record({
@@ -103,6 +141,14 @@ export const idlFactory = ({ IDL }) => {
   const ShortlistItem = IDL.Record({
     'savedAt' : Time,
     'neighbourhoodId' : IDL.Nat,
+  });
+  const PulsePostInput = IDL.Record({
+    'postType' : IDL.Text,
+    'title' : IDL.Text,
+    'description' : IDL.Text,
+    'neighbourhood' : IDL.Text,
+    'category' : IDL.Text,
+    'eventDate' : IDL.Opt(IDL.Text),
   });
   const SpaceListingInput = IDL.Record({
     'title' : IDL.Text,
@@ -117,7 +163,9 @@ export const idlFactory = ({ IDL }) => {
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'clearShortlist' : IDL.Func([], [], []),
     'deleteListing' : IDL.Func([IDL.Nat], [], []),
+    'deletePulse' : IDL.Func([IDL.Nat], [], []),
     'getAllListings' : IDL.Func([], [IDL.Vec(SpaceListing)], ['query']),
+    'getAllPulses' : IDL.Func([], [IDL.Vec(PulsePost)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getListingsByNeighbourhood' : IDL.Func(
@@ -126,6 +174,11 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'getOnboardingState' : IDL.Func([], [OnboardingState], ['query']),
+    'getPulsesByNeighbourhood' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(PulsePost)],
+        ['query'],
+      ),
     'getRecommendations' : IDL.Func([], [IDL.Vec(Recommendation)], ['query']),
     'getShortlistedNeighbourhoods' : IDL.Func(
         [],
@@ -138,6 +191,7 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'postPulse' : IDL.Func([PulsePostInput], [IDL.Nat], []),
     'postSpaceListing' : IDL.Func([SpaceListingInput], [IDL.Nat], []),
     'removeFromShortlist' : IDL.Func([IDL.Nat], [], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),

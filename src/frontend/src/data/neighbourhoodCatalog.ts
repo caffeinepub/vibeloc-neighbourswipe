@@ -4,6 +4,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 1,
     name: "Kilimani",
+    zone: "Ngong Rd",
     description:
       "Vibrant urban hub with cafes, nightlife, and modern apartments. Perfect for young professionals.",
     vibeSummary:
@@ -25,6 +26,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 2,
     name: "Westlands",
+    zone: "CBD & Surrounds",
     description:
       "Business district with excellent amenities, restaurants, and entertainment. Great connectivity.",
     vibeSummary:
@@ -46,6 +48,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 3,
     name: "Ngong Road",
+    zone: "Ngong Rd",
     description:
       "Affordable and accessible with good public transport. Mix of residential and commercial.",
     vibeSummary:
@@ -73,6 +76,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 4,
     name: "Lavington",
+    zone: "Ngong Rd",
     description:
       "Quiet, leafy suburb with spacious homes. Family-friendly with good schools nearby.",
     vibeSummary:
@@ -94,6 +98,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 5,
     name: "Parklands",
+    zone: "CBD & Surrounds",
     description:
       "Diverse community with great food scene and cultural mix. Affordable and lively.",
     vibeSummary:
@@ -119,6 +124,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 6,
     name: "Kileleshwa",
+    zone: "Ngong Rd",
     description:
       "Upscale residential area with modern apartments and good security. Close to amenities.",
     vibeSummary:
@@ -144,6 +150,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 7,
     name: "South B",
+    zone: "Mombasa Rd",
     description:
       "Established neighborhood with good infrastructure. Mix of apartments and standalone houses.",
     vibeSummary:
@@ -175,6 +182,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 8,
     name: "Kasarani",
+    zone: "Thika Rd",
     description:
       "Growing area with affordable housing and improving amenities. Good for budget-conscious renters.",
     vibeSummary:
@@ -200,6 +208,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 9,
     name: "Upperhill",
+    zone: "CBD & Surrounds",
     description:
       "Modern business district with high-rise apartments. Walking distance to hospitals and offices.",
     vibeSummary:
@@ -225,6 +234,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 10,
     name: "Ruaka",
+    zone: "Kiambu",
     description:
       "Fast-growing suburb with new developments. Good value for space, popular with young families.",
     vibeSummary:
@@ -252,6 +262,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 11,
     name: "Langata",
+    zone: "Langata & Rongai",
     description:
       "Serene area near national park. Great for nature lovers seeking peace close to the city.",
     vibeSummary:
@@ -277,6 +288,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 12,
     name: "Embakasi",
+    zone: "Mombasa Rd",
     description:
       "Industrial and residential mix with affordable options. Near airport and industrial area.",
     vibeSummary:
@@ -304,6 +316,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 13,
     name: "Kitengela",
+    zone: "Kajiado",
     description:
       "Fast-growing commuter town in Kajiado with affordable housing and new estates. Family-friendly with strong transport links.",
     vibeSummary:
@@ -335,6 +348,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 14,
     name: "Kiambu Region",
+    zone: "Kiambu",
     description:
       "Close to Nairobi, greener and quieter with mix of modern apartments and older suburbs. Popular with young professionals.",
     vibeSummary:
@@ -356,6 +370,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 15,
     name: "Thika",
+    zone: "Thika Rd",
     description:
       "Larger town with solid infrastructure and affordable rentals. Good access via Thika Superhighway with strong commercial activity.",
     vibeSummary:
@@ -383,6 +398,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 16,
     name: "Eastlands (Umoja, Donholm, Buruburu)",
+    zone: "Eastlands",
     description:
       "Densely populated with vibrant local culture and convenient transport. Lots of commercial spots and markets.",
     vibeSummary:
@@ -408,6 +424,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 17,
     name: "Ruai",
+    zone: "Eastlands",
     description:
       "Emerging low-density area with affordable land and expanding infrastructure. Attracting first-time homeowners.",
     vibeSummary:
@@ -429,6 +446,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 18,
     name: "Utawala",
+    zone: "Eastlands",
     description:
       "Rapidly growing suburb along Eastern Bypass with modern estates. Good connectivity and popular with families.",
     vibeSummary:
@@ -454,6 +472,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 19,
     name: "Syokimau",
+    zone: "Mombasa Rd",
     description:
       "Modern suburb with SGR station access and new developments. Great for commuters seeking value and convenience.",
     vibeSummary:
@@ -485,6 +504,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 20,
     name: "Athi River",
+    zone: "Mombasa Rd",
     description:
       "Industrial town with affordable housing options. Good for those working in nearby factories and EPZ.",
     vibeSummary:
@@ -516,6 +536,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 21,
     name: "Rongai",
+    zone: "Langata & Rongai",
     description:
       "Affordable commuter town with growing amenities and good transport links. Popular with budget-conscious renters.",
     vibeSummary:
@@ -543,6 +564,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 22,
     name: "Ngong",
+    zone: "Langata & Rongai",
     description:
       "Scenic town with cooler climate and spacious properties. Great for those seeking peace and nature near the city.",
     vibeSummary:
@@ -564,6 +586,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 23,
     name: "Ruiru",
+    zone: "Thika Rd",
     description:
       "Fast-growing town along Thika Road with affordable housing and improving infrastructure. Good for families and commuters.",
     vibeSummary:
@@ -591,6 +614,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 24,
     name: "Kamulu",
+    zone: "Eastlands",
     description:
       "Emerging residential area with affordable options and expanding amenities. Good for budget-conscious families.",
     vibeSummary:
@@ -618,6 +642,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 25,
     name: "Joska",
+    zone: "Eastlands",
     description:
       "Quiet, low-density area with affordable land and housing. Ideal for first-time homeowners seeking space.",
     vibeSummary:
@@ -639,6 +664,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 26,
     name: "Kahawa West",
+    zone: "Thika Rd",
     description:
       "Growing residential area with good transport links and affordable housing. Popular with young professionals and families.",
     vibeSummary:
@@ -664,6 +690,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 27,
     name: "Zimmerman",
+    zone: "Thika Rd",
     description:
       "Established residential area with good amenities and transport. Mix of apartments and standalone houses.",
     vibeSummary:
@@ -685,6 +712,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 28,
     name: "Embakasi South (Pipeline, Imara Daima)",
+    zone: "Mombasa Rd",
     description:
       "Vibrant area near airport with good transport links and affordable housing. Mix of residential and commercial.",
     vibeSummary:
@@ -710,6 +738,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 29,
     name: "South C",
+    zone: "Mombasa Rd",
     description:
       "Established middle-class neighborhood with good infrastructure and amenities. Close to CBD and airport.",
     vibeSummary:
@@ -741,6 +770,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 30,
     name: "Tatu City",
+    zone: "Thika Rd",
     description:
       "Modern smart city with cutting-edge infrastructure and amenities. Planned community with schools, offices, and retail.",
     vibeSummary:
@@ -772,6 +802,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 31,
     name: "Northlands",
+    zone: "Thika Rd",
     description:
       "Emerging smart city development with modern infrastructure and planned amenities. Future-focused community.",
     vibeSummary:
@@ -799,6 +830,42 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
       "Near Ruiru town",
       "Planned road network",
     ],
+  },
+  {
+    id: 32,
+    name: "BustaniNeo",
+    zone: "Digital City",
+    description:
+      "A digital city where creative innovators, builders, and dreamers converge. Not a place on a map — a way of living. Powered by Dewellpunk culture: decentralized, wellness-focused, and unapologetically alternative.",
+    vibeSummary:
+      "Where the garden meets the grid — build something new, live differently, and belong to the city that exists everywhere at once.",
+    rentMin: 0,
+    rentMax: 0,
+    commuteNote: "Exists everywhere — no commute required",
+    tags: [
+      "creative",
+      "innovation",
+      "digital-city",
+      "dewellpunk",
+      "alternative",
+      "community",
+      "remote-friendly",
+    ],
+    imageFilename: "bustani-neo-neighbourhood.dim_800x600.jpg",
+    lat: -1.2921,
+    lng: 36.8219,
+    landmarks: [
+      "DeSci Youths Hub",
+      "Dewellpunk Commons",
+      "BustaniNeo Creative Labs",
+      "The Open Garden",
+    ],
+    transportOptions: [
+      "Digital-first — accessible from anywhere",
+      "Physical pop-ups across Nairobi",
+      "Community-coordinated meetups",
+    ],
+    isDigitalCity: true,
   },
 ];
 

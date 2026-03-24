@@ -12,4 +12,6 @@ export interface Neighbourhood {
   lng: number;
   landmarks: string[];
   transportOptions: string[];
+  zone?: string;
+  isDigitalCity?: boolean;
 }

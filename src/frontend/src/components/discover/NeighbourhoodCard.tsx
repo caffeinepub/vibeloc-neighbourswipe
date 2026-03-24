@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronUp, MapPin } from "lucide-react";
+import { ChevronUp, MapPin, Sparkles } from "lucide-react";
 import type { Neighbourhood } from "../../types/neighbourhood";
 
 interface NeighbourhoodCardProps {
@@ -16,9 +16,16 @@ export default function NeighbourhoodCard({
   onLearnMore,
 }: NeighbourhoodCardProps) {
   const imageUrl = `/assets/generated/${neighbourhood.imageFilename}`;
+  const isDigital = neighbourhood.isDigitalCity;
 
   return (
-    <Card className="overflow-hidden border-2">
+    <Card
+      className={`overflow-hidden ${
+        isDigital
+          ? "border-2 border-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.4)]"
+          : "border-2"
+      }`}
+    >
       <div className="relative aspect-[4/5] w-full overflow-hidden">
         <img
           src={imageUrl}
@@ -26,6 +33,19 @@ export default function NeighbourhoodCard({
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+
+        {/* Digital City special badges at the top */}
+        {isDigital && (
+          <div className="absolute left-3 top-3 flex flex-col gap-1.5">
+            <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-xs font-bold text-emerald-400 backdrop-blur-sm">
+              ⚡ Digital City
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-xs font-bold text-violet-400 backdrop-blur-sm">
+              🌿 Dewellpunk
+            </span>
+          </div>
+        )}
+
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
           {matchReasons && matchReasons.length > 0 && (
             <div className="mb-2 flex flex-wrap gap-1.5">
@@ -49,7 +69,11 @@ export default function NeighbourhoodCard({
           )}
           <div className="mt-3 flex items-center justify-between">
             <div className="flex items-center gap-1 text-xs text-white/70">
-              <MapPin className="h-3.5 w-3.5" />
+              {isDigital ? (
+                <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+              ) : (
+                <MapPin className="h-3.5 w-3.5" />
+              )}
               <span>{neighbourhood.commuteNote}</span>
             </div>
             {onLearnMore && (
@@ -64,7 +88,7 @@ export default function NeighbourhoodCard({
                 data-ocid="neighbourhood.learnmore.button"
               >
                 <ChevronUp className="h-3.5 w-3.5" />
-                Learn More
+                {isDigital ? "Explore" : "Learn More"}
               </Button>
             )}
           </div>
@@ -72,17 +96,43 @@ export default function NeighbourhoodCard({
       </div>
       <CardContent className="space-y-4 p-6">
         <div>
-          <p className="text-sm font-semibold text-primary">
-            KES {neighbourhood.rentMin.toLocaleString()} &mdash;{" "}
-            {neighbourhood.rentMax.toLocaleString()}/month
-          </p>
+          {isDigital ? (
+            <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+              🌱 Open Community · No rent listed
+            </p>
+          ) : (
+            <p className="text-sm font-semibold text-primary">
+              KES {neighbourhood.rentMin.toLocaleString()} &mdash;{" "}
+              {neighbourhood.rentMax.toLocaleString()}/month
+            </p>
+          )}
           <p className="mt-2 text-sm text-muted-foreground">
             {neighbourhood.description}
           </p>
+          {isDigital && (
+            <p className="mt-2 text-xs font-medium text-violet-600 dark:text-violet-400">
+              ✦ Powered by Dewellpunk culture — decentralized, wellness-focused,
+              and unapologetically alternative
+            </p>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
           {neighbourhood.tags.slice(0, 5).map((tag) => (
-            <Badge key={tag} variant="secondary" className="capitalize">
+            <Badge
+              key={tag}
+              variant="secondary"
+              className={`capitalize ${
+                isDigital &&
+                [
+                  "digital-city",
+                  "dewellpunk",
+                  "creative",
+                  "innovation",
+                ].includes(tag)
+                  ? "border border-emerald-300 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
+                  : ""
+              }`}
+            >
               {tag.replace("-", " ")}
             </Badge>
           ))}

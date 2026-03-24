@@ -3,8 +3,24 @@ import type { Neighbourhood } from "../types/neighbourhood";
 import type { RenterPreferences } from "../types/preferences";
 
 const WORK_TYPE_BOOSTS: Record<string, string[]> = {
-  Remote: ["quiet", "green", "cafes", "modern"],
-  "Gig Worker": ["transport", "vibrant", "local-markets", "affordable"],
+  Remote: [
+    "quiet",
+    "green",
+    "cafes",
+    "modern",
+    "creative",
+    "innovation",
+    "digital-city",
+  ],
+  "Gig Worker": [
+    "transport",
+    "vibrant",
+    "local-markets",
+    "affordable",
+    "creative",
+    "innovation",
+    "digital-city",
+  ],
   "Formal Employment": ["business", "central", "modern"],
   Student: ["affordable", "community", "transport", "budget-friendly"],
   "Informal / Self-employed": [
@@ -51,11 +67,16 @@ export function scoreNeighbourhood(
 
   let score = 0;
 
-  // Budget fit
-  const rentMid = (neighbourhood.rentMin + neighbourhood.rentMax) / 2;
-  const budgetMid = (preferences.budgetMin + preferences.budgetMax) / 2;
-  const budgetDiff = Math.abs(rentMid - budgetMid);
-  const budgetScore = Math.max(0, 100 - (budgetDiff / budgetMid) * 100);
+  // Budget fit — treat 0/0 rent (digital city) as neutral score
+  let budgetScore: number;
+  if (neighbourhood.rentMin === 0 && neighbourhood.rentMax === 0) {
+    budgetScore = 75;
+  } else {
+    const rentMid = (neighbourhood.rentMin + neighbourhood.rentMax) / 2;
+    const budgetMid = (preferences.budgetMin + preferences.budgetMax) / 2;
+    const budgetDiff = Math.abs(rentMid - budgetMid);
+    budgetScore = Math.max(0, 100 - (budgetDiff / budgetMid) * 100);
+  }
   score += budgetScore * budgetWeight;
 
   // Lifestyle tag overlap
@@ -81,12 +102,14 @@ export function scoreNeighbourhood(
   }
   score += activityScore * activityWeight;
 
-  // Commute / CBD proximity — parse minutes from commuteNote string
-  const commuteMatch = neighbourhood.commuteNote.match(/(\d+)\s*min/);
+  // Commute / CBD proximity — digital city gets neutral score
   let commuteScore = 50;
-  if (commuteMatch) {
-    const mins = Number.parseInt(commuteMatch[1], 10);
-    commuteScore = Math.max(0, 100 - ((mins - 10) / 50) * 100);
+  if (!neighbourhood.isDigitalCity) {
+    const commuteMatch = neighbourhood.commuteNote.match(/(\d+)\s*min/);
+    if (commuteMatch) {
+      const mins = Number.parseInt(commuteMatch[1], 10);
+      commuteScore = Math.max(0, 100 - ((mins - 10) / 50) * 100);
+    }
   }
   score += commuteScore * commuteWeight;
 
@@ -108,15 +131,19 @@ export function getMatchReasons(
   const workType = preferences.workType || "";
   const tags = neighbourhood.tags;
 
+  if (tags.includes("digital-city")) {
+    reasons.push("Creative digital community");
+  }
+
   if (
     workType === "Remote" &&
-    tags.some((t) => ["quiet", "green", "cafes"].includes(t))
+    tags.some((t) => ["quiet", "green", "cafes", "creative"].includes(t))
   ) {
     reasons.push("Great for remote workers");
   }
   if (
     workType === "Gig Worker" &&
-    tags.some((t) => ["transport", "vibrant"].includes(t))
+    tags.some((t) => ["transport", "vibrant", "creative"].includes(t))
   ) {
     reasons.push("Ideal for gig workers");
   }
@@ -145,10 +172,12 @@ export function getMatchReasons(
     reasons.push("Near your activity areas");
   }
 
-  const rentMid = (neighbourhood.rentMin + neighbourhood.rentMax) / 2;
-  const budgetMid = (preferences.budgetMin + preferences.budgetMax) / 2;
-  if (Math.abs(rentMid - budgetMid) / budgetMid < 0.2) {
-    reasons.push("Fits your budget");
+  if (neighbourhood.rentMin !== 0 || neighbourhood.rentMax !== 0) {
+    const rentMid = (neighbourhood.rentMin + neighbourhood.rentMax) / 2;
+    const budgetMid = (preferences.budgetMin + preferences.budgetMax) / 2;
+    if (Math.abs(rentMid - budgetMid) / budgetMid < 0.2) {
+      reasons.push("Fits your budget");
+    }
   }
 
   const matchingTags = neighbourhood.tags.filter((tag) =>

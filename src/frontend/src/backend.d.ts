@@ -26,6 +26,17 @@ export interface Recommendation {
     neighbourhood: string;
     score: bigint;
 }
+export interface PulsePost {
+    id: bigint;
+    postType: string;
+    title: string;
+    postedBy: Principal;
+    createdAt: Time;
+    description: string;
+    neighbourhood: string;
+    category: string;
+    eventDate?: string;
+}
 export interface OnboardingState {
     isComplete: boolean;
 }
@@ -39,6 +50,14 @@ export interface SpaceListingInput {
 export interface UserProfile {
     name: string;
 }
+export interface PulsePostInput {
+    postType: string;
+    title: string;
+    description: string;
+    neighbourhood: string;
+    category: string;
+    eventDate?: string;
+}
 export enum UserRole {
     admin = "admin",
     user = "user",
@@ -48,15 +67,19 @@ export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     clearShortlist(): Promise<void>;
     deleteListing(id: bigint): Promise<void>;
+    deletePulse(id: bigint): Promise<void>;
     getAllListings(): Promise<Array<SpaceListing>>;
+    getAllPulses(): Promise<Array<PulsePost>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getListingsByNeighbourhood(neighbourhood: string): Promise<Array<SpaceListing>>;
     getOnboardingState(): Promise<OnboardingState>;
+    getPulsesByNeighbourhood(neighbourhood: string): Promise<Array<PulsePost>>;
     getRecommendations(): Promise<Array<Recommendation>>;
     getShortlistedNeighbourhoods(): Promise<Array<ShortlistItem>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
+    postPulse(input: PulsePostInput): Promise<bigint>;
     postSpaceListing(input: SpaceListingInput): Promise<bigint>;
     removeFromShortlist(neighbourhoodId: bigint): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;

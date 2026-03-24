@@ -1,11 +1,30 @@
-# Specification
+# VibeLoc by GJilani
 
-## Summary
-**Goal:** Expand VibeLoc’s static Nairobi-area neighbourhood catalog to include additional major Nairobi and nearby metro areas while keeping the existing data shape and ensuring uniqueness.
+## Current State
+The Post tab has three sub-forms: Spaces (wired to backend), Insights & Vibes (frontend-only, no persistence), and Community & Events (frontend-only, no persistence). The MatchesPage shows liked neighbourhoods but only links to space listings.
 
-**Planned changes:**
-- Add new Neighbourhood entries to `frontend/src/data/neighbourhoodCatalog.ts` for: Kitengela, Kiambu Region, Thika, Eastlands (e.g., Umoja/Donholm/Buruburu), Ruai, Utawala, Syokimau, Athi River, Rongai, Ngong, Ruiru, Kamulu, Joska, Kahawa West, Zimmerman, Embakasi South (e.g., Pipeline/Imara Daima), South C, Tatu City, Northlands.
-- Ensure all new entries use unique numeric IDs continuing after the current highest ID (12) and have no duplicate names.
-- Assign a valid `imageFilename` to each new entry (reuse the existing neighbourhood placeholder asset where needed) so the Discover swipe feed continues to render without errors.
+## Requested Changes (Diff)
 
-**User-visible outcome:** The Discover swipe feed shows a larger set of Nairobi and metro neighbourhoods/areas to browse and swipe through without runtime issues.
+### Add
+- Backend `PulsePost` type covering both Insights & Vibes and Community & Events post categories
+- `postPulse` mutation — saves a pulse post to stable storage
+- `getPulsesByNeighbourhood(neighbourhood)` query — returns all pulse posts for a neighbourhood
+- `getAllPulses` admin query
+- `deletePulse` — caller or admin can delete
+- Frontend: wire InsightsForm and CommunityForm to the new `postPulse` backend call
+- Frontend: show pulse posts (Insights & Vibes + Community & Events) in the NeighbourhoodListingsPage alongside Spaces, with tab/filter switcher
+- Frontend: react-query hooks `usePostPulse`, `useGetPulsesByNeighbourhood`
+
+### Modify
+- `NeighbourhoodListingsPage` — add a filter bar (All / Spaces / Insights / Community) and render pulse post cards below space listings
+- `InsightsForm` and `CommunityForm` — call backend on submit instead of just showing toast
+
+### Remove
+- Nothing removed
+
+## Implementation Plan
+1. Add `PulsePost`, `PulsePostInput` types and storage to backend; add `postPulse`, `getPulsesByNeighbourhood`, `getAllPulses`, `deletePulse` functions
+2. Regenerate frontend bindings
+3. Add `usePostPulse` and `useGetPulsesByNeighbourhood` hooks
+4. Wire InsightsForm and CommunityForm to `usePostPulse`
+5. Update NeighbourhoodListingsPage to fetch and display pulse posts with filter tabs

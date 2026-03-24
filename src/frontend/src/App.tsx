@@ -7,7 +7,9 @@ import {
   redirect,
 } from "@tanstack/react-router";
 import { ThemeProvider } from "next-themes";
+import { useState } from "react";
 import AppLayout from "./components/layout/AppLayout";
+import SplashScreen from "./components/splash/SplashScreen";
 import AdminPage from "./pages/AdminPage";
 import DiscoverPage from "./pages/DiscoverPage";
 import MatchesPage from "./pages/MatchesPage";
@@ -91,6 +93,21 @@ declare module "@tanstack/react-router" {
 }
 
 export default function App() {
+  const [splashSeen, setSplashSeen] = useState(
+    () => localStorage.getItem("vibeloc_splash_seen") === "true",
+  );
+
+  if (!splashSeen) {
+    return (
+      <SplashScreen
+        onDismiss={() => {
+          localStorage.setItem("vibeloc_splash_seen", "true");
+          setSplashSeen(true);
+        }}
+      />
+    );
+  }
+
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <RouterProvider router={router} />

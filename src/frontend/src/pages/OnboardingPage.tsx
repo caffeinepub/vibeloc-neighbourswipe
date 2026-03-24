@@ -33,10 +33,13 @@ export default function OnboardingPage() {
         <div className="container mx-auto max-w-2xl px-4 py-8">
           <div className="mb-6 text-center">
             <img
-              src="/assets/generated/vibeloc-logo.dim_512x512.png"
+              src="/assets/generated/vibeloc-logo-pin-pulse-transparent.dim_400x400.png"
               alt="VibeLoc"
               className="mx-auto h-20 w-20"
             />
+            <p className="mt-2 text-[11px] tracking-widest text-muted-foreground/50 uppercase">
+              by GJilani
+            </p>
           </div>
           <OnboardingForm onComplete={handleComplete} isSaving={isSaving} />
         </div>

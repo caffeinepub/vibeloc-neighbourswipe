@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { SpaceListingInput, UserProfile } from "../backend";
+import type {
+  PulsePost,
+  PulsePostInput,
+  SpaceListingInput,
+  UserProfile,
+} from "../backend";
 import { useActor } from "./useActor";
 
 export function useGetCallerUserProfile() {
@@ -77,5 +82,31 @@ export function useDeleteListing() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["listings"] });
     },
+  });
+}
+
+export function usePostPulse() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: PulsePostInput) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.postPulse(input);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pulses"] });
+    },
+  });
+}
+
+export function usePulsesByNeighbourhood(neighbourhoodName: string) {
+  const { actor, isFetching: actorFetching } = useActor();
+  return useQuery<PulsePost[]>({
+    queryKey: ["pulses", "neighbourhood", neighbourhoodName],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.getPulsesByNeighbourhood(neighbourhoodName);
+    },
+    enabled: !!actor && !actorFetching && !!neighbourhoodName,
   });
 }

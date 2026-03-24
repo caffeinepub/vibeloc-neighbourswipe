@@ -11,6 +11,25 @@ import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
 export interface OnboardingState { 'isComplete' : boolean }
+export interface PulsePost {
+  'id' : bigint,
+  'postType' : string,
+  'title' : string,
+  'postedBy' : Principal,
+  'createdAt' : Time,
+  'description' : string,
+  'neighbourhood' : string,
+  'category' : string,
+  'eventDate' : [] | [string],
+}
+export interface PulsePostInput {
+  'postType' : string,
+  'title' : string,
+  'description' : string,
+  'neighbourhood' : string,
+  'category' : string,
+  'eventDate' : [] | [string],
+}
 export interface Recommendation { 'neighbourhood' : string, 'score' : bigint }
 export interface ShortlistItem { 'savedAt' : Time, 'neighbourhoodId' : bigint }
 export interface SpaceListing {
@@ -40,15 +59,19 @@ export interface _SERVICE {
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'clearShortlist' : ActorMethod<[], undefined>,
   'deleteListing' : ActorMethod<[bigint], undefined>,
+  'deletePulse' : ActorMethod<[bigint], undefined>,
   'getAllListings' : ActorMethod<[], Array<SpaceListing>>,
+  'getAllPulses' : ActorMethod<[], Array<PulsePost>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getListingsByNeighbourhood' : ActorMethod<[string], Array<SpaceListing>>,
   'getOnboardingState' : ActorMethod<[], OnboardingState>,
+  'getPulsesByNeighbourhood' : ActorMethod<[string], Array<PulsePost>>,
   'getRecommendations' : ActorMethod<[], Array<Recommendation>>,
   'getShortlistedNeighbourhoods' : ActorMethod<[], Array<ShortlistItem>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
+  'postPulse' : ActorMethod<[PulsePostInput], bigint>,
   'postSpaceListing' : ActorMethod<[SpaceListingInput], bigint>,
   'removeFromShortlist' : ActorMethod<[bigint], undefined>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,

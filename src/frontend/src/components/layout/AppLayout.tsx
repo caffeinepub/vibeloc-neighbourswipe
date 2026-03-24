@@ -10,6 +10,12 @@ export default function AppLayout() {
         <Outlet />
       </main>
       <BottomNav />
+      <footer className="pb-24 pt-2 text-center">
+        <p className="text-[11px] text-muted-foreground/50 tracking-wide">
+          VibeLoc by{" "}
+          <span className="font-medium text-muted-foreground/70">GJilani</span>
+        </p>
+      </footer>
     </div>
   );
 }
