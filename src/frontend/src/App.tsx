@@ -76,7 +76,10 @@ const routeTree = rootRoute.addChildren([
   adminRoute,
 ]);
 
-const router = createRouter({ routeTree });
+const router = createRouter({
+  routeTree,
+  defaultPreload: "intent",
+});
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -95,6 +98,10 @@ export default function App() {
         onComplete={() => {
           localStorage.setItem("vibeloc_onboarding_complete", "true");
           setOnboardingComplete(true);
+          // Navigate to profile after onboarding
+          setTimeout(() => {
+            router.navigate({ to: "/profile" });
+          }, 0);
         }}
       />
     );

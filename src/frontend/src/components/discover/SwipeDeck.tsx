@@ -34,6 +34,18 @@ export default function SwipeDeck({
   const pendingActionRef = useRef<(() => void) | null>(null);
 
   const currentNeighbourhood = neighbourhoods[currentIndex];
+  const nextNeighbourhood = neighbourhoods[currentIndex + 1];
+
+  // Preload next 3 images whenever currentIndex changes
+  useEffect(() => {
+    for (const offset of [1, 2, 3]) {
+      const next = neighbourhoods[currentIndex + offset];
+      if (next?.imageFilename) {
+        const img = new Image();
+        img.src = next.imageFilename;
+      }
+    }
+  }, [currentIndex, neighbourhoods]);
 
   const advanceIndex = useCallback(() => {
     if (currentIndex < neighbourhoods.length - 1) {
@@ -158,58 +170,81 @@ export default function SwipeDeck({
 
   return (
     <div className="relative mx-auto w-full max-w-md">
-      <div
-        ref={cardRef}
-        className="relative touch-none select-none"
-        style={{
-          transform: `translateX(${translateX}px) rotate(${rotation}deg)`,
-          opacity: Math.max(cardOpacity, isFlyingOut ? 0 : 0.5),
-          cursor: isDragging ? "grabbing" : "grab",
-          transition: isFlyingOut
-            ? "transform 350ms ease-out, opacity 350ms ease-out"
-            : "none",
-          pointerEvents: isFlyingOut ? "none" : "auto",
-        }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDown}
-        onTransitionEnd={handleTransitionEnd}
-      >
-        <NeighbourhoodCard
-          neighbourhood={currentNeighbourhood}
-          matchReasons={currentMatchReasons}
-          onLearnMore={() => setShowDetail(true)}
-        />
-
-        {/* Like overlay */}
-        {likeOverlayOpacity > 0 && (
+      {/* Stack container — next card sits behind current card */}
+      <div className="relative">
+        {/* NEXT card — rendered behind, slightly scaled down, non-interactive */}
+        {nextNeighbourhood && (
           <div
-            className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-lg border-4 border-green-500 bg-green-500/20"
-            style={{ opacity: likeOverlayOpacity }}
+            className="absolute inset-0"
+            style={{
+              transform: "scale(0.95) translateY(8px)",
+              zIndex: 0,
+              pointerEvents: "none",
+              opacity: 0.7,
+            }}
           >
-            <Heart className="h-20 w-20 text-green-500" fill="currentColor" />
-            <span className="text-3xl font-black tracking-widest text-green-500 drop-shadow-lg">
-              LIKE
-            </span>
+            <NeighbourhoodCard neighbourhood={nextNeighbourhood} />
           </div>
         )}
 
-        {/* Dislike overlay */}
-        {dislikeOverlayOpacity > 0 && (
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-lg border-4 border-red-500 bg-red-500/20"
-            style={{ opacity: dislikeOverlayOpacity }}
-          >
-            <X className="h-20 w-20 text-red-500" />
-            <span className="text-3xl font-black tracking-widest text-red-500 drop-shadow-lg">
-              NOPE
-            </span>
-          </div>
-        )}
+        {/* CURRENT card — draggable, on top */}
+        <div
+          ref={cardRef}
+          className="relative touch-none select-none"
+          style={{
+            transform: `translateX(${translateX}px) rotate(${rotation}deg)`,
+            opacity: Math.max(cardOpacity, isFlyingOut ? 0 : 0.5),
+            cursor: isDragging ? "grabbing" : "grab",
+            transition: isFlyingOut
+              ? "transform 350ms ease-out, opacity 350ms ease-out"
+              : "none",
+            pointerEvents: isFlyingOut ? "none" : "auto",
+            zIndex: 1,
+            willChange: isDragging || isFlyingOut ? "transform" : "auto",
+          }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onTransitionEnd={handleTransitionEnd}
+        >
+          <NeighbourhoodCard
+            neighbourhood={currentNeighbourhood}
+            matchReasons={currentMatchReasons}
+            onLearnMore={() => setShowDetail(true)}
+          />
 
-        {/* Swipe hint overlay — first time only */}
-        {showHint && <SwipeHintOverlay onDismiss={() => setShowHint(false)} />}
+          {/* Like overlay */}
+          {likeOverlayOpacity > 0 && (
+            <div
+              className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-lg border-4 border-green-500 bg-green-500/20"
+              style={{ opacity: likeOverlayOpacity }}
+            >
+              <Heart className="h-20 w-20 text-green-500" fill="currentColor" />
+              <span className="text-3xl font-black tracking-widest text-green-500 drop-shadow-lg">
+                LIKE
+              </span>
+            </div>
+          )}
+
+          {/* Dislike overlay */}
+          {dislikeOverlayOpacity > 0 && (
+            <div
+              className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-lg border-4 border-red-500 bg-red-500/20"
+              style={{ opacity: dislikeOverlayOpacity }}
+            >
+              <X className="h-20 w-20 text-red-500" />
+              <span className="text-3xl font-black tracking-widest text-red-500 drop-shadow-lg">
+                NOPE
+              </span>
+            </div>
+          )}
+
+          {/* Swipe hint overlay — first time only */}
+          {showHint && (
+            <SwipeHintOverlay onDismiss={() => setShowHint(false)} />
+          )}
+        </div>
       </div>
 
       {/* Manual buttons */}

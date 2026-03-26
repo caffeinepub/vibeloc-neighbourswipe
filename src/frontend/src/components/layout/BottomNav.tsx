@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Compass, Heart, Home, PlusSquare, Shield, User } from "lucide-react";
+import { Heart, Home, PlusSquare, Shield, User } from "lucide-react";
 import { useIsAdmin } from "../../hooks/useAdmin";
 
 export default function BottomNav() {
@@ -8,12 +8,6 @@ export default function BottomNav() {
   const { isAdmin } = useIsAdmin();
 
   const navItems = [
-    {
-      path: "/onboarding",
-      icon: Compass,
-      label: "Start",
-      ocid: "nav.start_link",
-    },
     { path: "/", icon: Home, label: "Discover", ocid: "nav.discover_link" },
     {
       path: "/matches",

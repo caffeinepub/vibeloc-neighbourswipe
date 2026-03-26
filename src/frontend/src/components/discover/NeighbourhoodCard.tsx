@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronUp, MapPin, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { Neighbourhood } from "../../types/neighbourhood";
 
 interface NeighbourhoodCardProps {
@@ -17,6 +18,13 @@ export default function NeighbourhoodCard({
 }: NeighbourhoodCardProps) {
   const imageUrl = neighbourhood.imageFilename;
   const isDigital = neighbourhood.isDigitalCity;
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Reset loaded state when the image URL changes (i.e. new card is shown)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: imageUrl is intentional — reset on card change
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [imageUrl]);
 
   return (
     <Card
@@ -27,10 +35,20 @@ export default function NeighbourhoodCard({
       }`}
     >
       <div className="relative aspect-[4/5] w-full overflow-hidden">
+        {/* Placeholder shown while image loads */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900" />
+
         <img
           src={imageUrl}
           alt={neighbourhood.name}
-          className="h-full w-full object-cover"
+          loading="eager"
+          // @ts-ignore fetchPriority is a valid HTML attribute
+          fetchPriority="high"
+          decoding="async"
+          className={`h-full w-full object-cover transition-opacity duration-500 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
