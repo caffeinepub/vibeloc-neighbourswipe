@@ -15,7 +15,7 @@ export default function NeighbourhoodCard({
   matchReasons,
   onLearnMore,
 }: NeighbourhoodCardProps) {
-  const imageUrl = `/assets/generated/${neighbourhood.imageFilename}`;
+  const imageUrl = neighbourhood.imageFilename;
   const isDigital = neighbourhood.isDigitalCity;
 
   return (
