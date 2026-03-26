@@ -11,14 +11,17 @@ import type { Neighbourhood } from "../types/neighbourhood";
 const ZONES = [
   "All",
   "Digital City",
-  "CBD & Surrounds",
-  "Ngong Rd",
-  "Thika Rd",
-  "Mombasa Rd",
-  "Langata & Rongai",
+  "CBD Core",
+  "Waiyaki Way",
+  "Northern Heights",
+  "Ngong Road",
+  "Thika Road",
+  "Southern Corridor",
+  "Langata Belt",
   "Eastlands",
-  "Kiambu",
-  "Kajiado",
+  "Kiambu Belt",
+  "Kajiado Belt",
+  "Eastern Bypass",
 ];
 
 export default function DiscoverPage() {
