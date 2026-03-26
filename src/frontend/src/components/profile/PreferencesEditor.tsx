@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, ChevronLeft, Loader2, Pencil } from "lucide-react";
+import {
+  CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  Loader2,
+  Pencil,
+} from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import type { RenterPreferences } from "../../types/preferences";
@@ -17,106 +23,154 @@ const WORK_TYPES = [
   "Business Owner",
 ];
 
-const NAIROBI_AREAS = [
-  // CBD Core
-  "Nairobi CBD",
-  "Ngara",
-  "Pangani",
-  "Eastleigh",
-  "Upper Hill",
-  // Waiyaki Way
-  "Westlands",
-  "Spring Valley",
-  "Loresho",
-  "Kangemi",
-  "Mountain View",
-  "Uthiru",
-  "Kinoo",
-  "Kikuyu",
-  "Regen",
-  // Northern Heights
-  "Parklands",
-  "Muthaiga",
-  "Gigiri",
-  "Rosslyn",
-  "Runda",
-  "Ruaka",
-  // Ngong Road
-  "Kilimani",
-  "Hurlingham",
-  "Kileleshwa",
-  "Lavington",
-  "Adams Arcade",
-  "Riruta",
-  "Kawangware",
-  "Karen",
-  // Thika Road
-  "Roasters",
-  "Ngumba Estate",
-  "Roysambu",
-  "Zimmerman",
-  "Kasarani",
-  "Githurai",
-  "Kahawa Wendani",
-  "Kahawa Sukari",
-  "Northlands",
-  "Ruiru",
-  "Juja",
-  "Witeithie",
-  "Thika",
-  // Southern Corridor
-  "South C",
-  "South B",
-  "Industrial Area",
-  "Imara Daima",
-  "Embakasi",
-  "Syokimau",
-  "Mlolongo",
-  // Langata Belt
-  "Madaraka Estate",
-  "Dam Estate",
-  "Otiende",
-  "Onyonka",
-  "Ngei",
-  "Langata",
-  // Eastlands
-  "Kariobangi",
-  "Dandora",
-  "Buruburu",
-  "Donholm",
-  "Umoja",
-  "Kayole",
-  "Komarock",
-  "Fedha Estate",
-  // Kiambu Belt
-  "Wangige",
-  "Kingeero",
-  "Gachie",
-  "Kiambu Town",
-  "Kirigiti",
-  "Thindigua",
-  "Ridgeways",
-  "Marurui",
-  "Garden Estate",
-  "Thome",
-  "Kahawa West",
-  // Kajiado Belt
-  "Kitengela",
-  "Ongata Rongai",
-  "Kiserian",
-  "Ngong",
-  "Isinya",
-  // Eastern Bypass / Kangundo
-  "Utawala",
-  "Ruai",
-  "OJ",
-  "Tatu City",
-  "Kamakis",
-  "Membly",
-  "Kamulu",
-  "Joska",
-  "Infinity",
+const ZONES = [
+  {
+    name: "CBD Core",
+    neighbourhoods: [
+      "Nairobi CBD",
+      "Ngara",
+      "Pangani",
+      "Eastleigh",
+      "Upper Hill",
+    ],
+  },
+  {
+    name: "Waiyaki Way Corridor",
+    neighbourhoods: [
+      "Westlands",
+      "Spring Valley",
+      "Loresho",
+      "Kangemi",
+      "Mountain View",
+      "Uthiru",
+      "Kinoo",
+      "Kikuyu",
+      "Regen",
+    ],
+  },
+  {
+    name: "Northern Heights",
+    neighbourhoods: [
+      "Parklands",
+      "Muthaiga",
+      "Gigiri",
+      "Rosslyn",
+      "Runda",
+      "Ruaka",
+    ],
+  },
+  {
+    name: "Ngong Road Corridor",
+    neighbourhoods: [
+      "Kilimani",
+      "Hurlingham",
+      "Kileleshwa",
+      "Lavington",
+      "Adams Arcade",
+      "Riruta",
+      "Kawangware",
+      "Karen",
+    ],
+  },
+  {
+    name: "Thika Road Corridor",
+    neighbourhoods: [
+      "Roasters",
+      "Ngumba Estate",
+      "Roysambu",
+      "Zimmerman",
+      "Kasarani",
+      "Githurai",
+      "Kahawa Wendani",
+      "Kahawa Sukari",
+      "Northlands",
+      "Ruiru",
+      "Juja",
+      "Witeithie",
+      "Thika",
+    ],
+  },
+  {
+    name: "Southern / Mombasa Rd",
+    neighbourhoods: [
+      "South C",
+      "South B",
+      "Industrial Area",
+      "Imara Daima",
+      "Embakasi",
+      "Syokimau",
+      "Mlolongo",
+    ],
+  },
+  {
+    name: "Langata Belt",
+    neighbourhoods: [
+      "Madaraka Estate",
+      "Dam Estate",
+      "Otiende",
+      "Onyonka",
+      "Ngei",
+      "Langata",
+    ],
+  },
+  {
+    name: "Eastlands",
+    neighbourhoods: [
+      "Kariobangi",
+      "Dandora",
+      "Buruburu",
+      "Donholm",
+      "Umoja",
+      "Kayole",
+      "Komarock",
+      "Fedha Estate",
+    ],
+  },
+  {
+    name: "Kiambu Belt",
+    neighbourhoods: [
+      "Wangige",
+      "Kingeero",
+      "Gachie",
+      "Kiambu Town",
+      "Kirigiti",
+      "Thindigua",
+      "Ridgeways",
+      "Marurui",
+      "Garden Estate",
+      "Thome",
+      "Kahawa West",
+    ],
+  },
+  {
+    name: "Kajiado / Kitengela",
+    neighbourhoods: [
+      "Kitengela",
+      "Ongata Rongai",
+      "Kiserian",
+      "Ngong",
+      "Isinya",
+    ],
+  },
+  {
+    name: "Eastern Bypass",
+    neighbourhoods: [
+      "Utawala",
+      "Ruai",
+      "OJ",
+      "Tatu City",
+      "Kamakis",
+      "Membly",
+      "Kamulu",
+      "Joska",
+      "Infinity",
+    ],
+  },
+  { name: "⚡ Digital City", neighbourhoods: ["BustaniNeo"] },
 ];
+
+// Keep NAIROBI_AREAS for any other consumers
+export const NAIROBI_AREAS = ZONES.flatMap((z) => z.neighbourhoods);
 
 const LIFESTYLE_VIBES = [
   "Nightlife",
@@ -238,7 +292,21 @@ function StepActivityAreas({
   value,
   onChange,
 }: { value: string[]; onChange: (v: string[]) => void }) {
-  const toggle = (area: string) =>
+  const [openZones, setOpenZones] = useState<Set<string>>(new Set());
+
+  const toggleZone = (zoneName: string) => {
+    setOpenZones((prev) => {
+      const next = new Set(prev);
+      if (next.has(zoneName)) {
+        next.delete(zoneName);
+      } else {
+        next.add(zoneName);
+      }
+      return next;
+    });
+  };
+
+  const toggleArea = (area: string) =>
     onChange(
       value.includes(area)
         ? value.filter((a) => a !== area)
@@ -248,16 +316,17 @@ function StepActivityAreas({
     );
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <div className="space-y-1">
         <h2 className="text-xl font-semibold text-foreground">
           Daily activity areas
         </h2>
         <p className="text-sm text-muted-foreground">
-          Select all areas you spend time in daily — work, school, errands.
-          We'll prioritise nearby neighbourhoods.
+          Pick a zone, then choose your spots — up to 5 total.
         </p>
       </div>
+
+      {/* Counter */}
       <div className="flex items-center gap-2">
         <span className="text-xs text-muted-foreground">Selected:</span>
         <span
@@ -272,16 +341,78 @@ function StepActivityAreas({
           {value.length} / 5
         </span>
       </div>
-      <div className="grid grid-cols-3 gap-2">
-        {NAIROBI_AREAS.map((area) => (
-          <Chip
-            key={area}
-            label={area}
-            selected={value.includes(area)}
-            onClick={() => toggle(area)}
-            data-ocid="preferences.activity_area.toggle"
-          />
-        ))}
+
+      {/* Zone accordion list */}
+      <div className="space-y-2">
+        {ZONES.map((zone) => {
+          const isOpen = openZones.has(zone.name);
+          const selectedInZone = zone.neighbourhoods.filter((n) =>
+            value.includes(n),
+          );
+          const hasSelected = selectedInZone.length > 0;
+
+          return (
+            <div key={zone.name} className="rounded-xl overflow-hidden">
+              {/* Zone button */}
+              <button
+                type="button"
+                onClick={() => toggleZone(zone.name)}
+                data-ocid="preferences.activity_area.toggle"
+                className={cn(
+                  "w-full flex items-center justify-between px-4 py-3 rounded-xl border-2 text-left transition-all duration-200",
+                  hasSelected
+                    ? "border-primary bg-primary/5 text-foreground"
+                    : isOpen
+                      ? "border-border/80 bg-muted/40 text-foreground"
+                      : "border-border bg-background text-foreground hover:border-primary/40 hover:bg-muted/30",
+                )}
+              >
+                <span className="font-medium text-sm">{zone.name}</span>
+                <div className="flex items-center gap-2 shrink-0">
+                  {hasSelected && (
+                    <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-bold text-primary-foreground">
+                      {selectedInZone.length} selected
+                    </span>
+                  )}
+                  <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                  </motion.div>
+                </div>
+              </button>
+
+              {/* Neighbourhood chips (accordion body) */}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    style={{ overflow: "hidden" }}
+                  >
+                    <div className="border-l-2 border-primary/30 ml-3 mt-1 mb-1 pl-3 pr-1 py-3">
+                      <div className="grid grid-cols-3 gap-1.5">
+                        {zone.neighbourhoods.map((hood) => (
+                          <Chip
+                            key={hood}
+                            label={hood}
+                            selected={value.includes(hood)}
+                            onClick={() => toggleArea(hood)}
+                            data-ocid="preferences.activity_area.toggle"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
