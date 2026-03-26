@@ -26,6 +26,12 @@ export default function NeighbourhoodCard({
     setImageLoaded(false);
   }, [imageUrl]);
 
+  // Build the full list of tags to show at the top, including digital city label
+  const topTags = [
+    ...(isDigital ? ["⚡ Pop Up Cities", "🌿 Dewellpunk"] : []),
+    ...(matchReasons ?? []).slice(0, 2).map((r) => `✦ ${r}`),
+  ];
+
   return (
     <Card
       className={`overflow-hidden ${
@@ -52,27 +58,15 @@ export default function NeighbourhoodCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
-        {/* Digital City special badges at the top */}
-        {isDigital && (
-          <div className="absolute left-3 top-3 flex flex-col gap-1.5">
-            <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-xs font-bold text-emerald-400 backdrop-blur-sm">
-              ⚡ Digital City
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-xs font-bold text-violet-400 backdrop-blur-sm">
-              🌿 Dewellpunk
-            </span>
-          </div>
-        )}
-
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-          {matchReasons && matchReasons.length > 0 && (
+          {topTags.length > 0 && (
             <div className="mb-2 flex flex-wrap gap-1.5">
-              {matchReasons.slice(0, 2).map((reason) => (
+              {topTags.map((tag) => (
                 <span
-                  key={reason}
+                  key={tag}
                   className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-medium text-white backdrop-blur-sm"
                 >
-                  ✦ {reason}
+                  {tag}
                 </span>
               ))}
             </div>
@@ -151,7 +145,7 @@ export default function NeighbourhoodCard({
                   : ""
               }`}
             >
-              {tag.replace("-", " ")}
+              {tag === "digital-city" ? "pop up cities" : tag.replace("-", " ")}
             </Badge>
           ))}
         </div>
