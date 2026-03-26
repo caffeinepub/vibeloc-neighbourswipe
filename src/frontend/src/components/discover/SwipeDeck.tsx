@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Neighbourhood } from "../../types/neighbourhood";
 import NeighbourhoodCard from "./NeighbourhoodCard";
 import NeighbourhoodDetailSheet from "./NeighbourhoodDetailSheet";
+import SwipeHintOverlay from "./SwipeHintOverlay";
 
 interface SwipeDeckProps {
   neighbourhoods: Neighbourhood[];
@@ -24,6 +25,9 @@ export default function SwipeDeck({
   const [showDetail, setShowDetail] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState<"left" | "right" | null>(
     null,
+  );
+  const [showHint, setShowHint] = useState(
+    () => !localStorage.getItem("vibeloc_swipe_hint_seen"),
   );
   const cardRef = useRef<HTMLDivElement>(null);
   const startXRef = useRef(0);
@@ -203,6 +207,9 @@ export default function SwipeDeck({
             </span>
           </div>
         )}
+
+        {/* Swipe hint overlay — first time only */}
+        {showHint && <SwipeHintOverlay onDismiss={() => setShowHint(false)} />}
       </div>
 
       {/* Manual buttons */}

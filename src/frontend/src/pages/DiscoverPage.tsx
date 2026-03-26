@@ -1,5 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import DiscoverEmptyState from "../components/discover/DiscoverEmptyState";
 import SwipeDeck from "../components/discover/SwipeDeck";
@@ -25,18 +24,10 @@ const ZONES = [
 ];
 
 export default function DiscoverPage() {
-  const navigate = useNavigate();
-  const { preferences, onboardingComplete, isLoadingOnboarding } =
-    usePreferences();
+  const { preferences, isLoadingOnboarding } = usePreferences();
   const { addToShortlist, clearShortlist } = useShortlist();
   const { swipedIds, isLoading: isLoadingSwipes } = useSwipeFeed();
   const [selectedZone, setSelectedZone] = useState("All");
-
-  useEffect(() => {
-    if (!isLoadingOnboarding && !onboardingComplete) {
-      navigate({ to: "/onboarding" });
-    }
-  }, [onboardingComplete, isLoadingOnboarding, navigate]);
 
   const scoredRecommendations = useMemo(
     () => getScoredRecommendations(preferences ?? null, swipedIds),

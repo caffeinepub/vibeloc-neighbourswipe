@@ -9,23 +9,16 @@ import {
 import { ThemeProvider } from "next-themes";
 import { useState } from "react";
 import AppLayout from "./components/layout/AppLayout";
-import SplashScreen from "./components/splash/SplashScreen";
+import FirstLaunchFlow from "./components/onboarding/FirstLaunchFlow";
 import AdminPage from "./pages/AdminPage";
 import DiscoverPage from "./pages/DiscoverPage";
 import MatchesPage from "./pages/MatchesPage";
 import NeighbourhoodListingsPage from "./pages/NeighbourhoodListingsPage";
-import OnboardingPage from "./pages/OnboardingPage";
 import PostPage from "./pages/PostPage";
 import ProfilePreferencesPage from "./pages/ProfilePreferencesPage";
 
 const rootRoute = createRootRoute({
   component: AppLayout,
-});
-
-const onboardingRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/onboarding",
-  component: OnboardingPage,
 });
 
 const discoverRoute = createRoute({
@@ -74,7 +67,6 @@ const adminRoute = createRoute({
 });
 
 const routeTree = rootRoute.addChildren([
-  onboardingRoute,
   discoverRoute,
   shortlistRedirectRoute,
   matchesRoute,
@@ -93,16 +85,16 @@ declare module "@tanstack/react-router" {
 }
 
 export default function App() {
-  const [splashSeen, setSplashSeen] = useState(
-    () => localStorage.getItem("vibeloc_splash_seen") === "true",
+  const [onboardingComplete, setOnboardingComplete] = useState(
+    () => localStorage.getItem("vibeloc_onboarding_complete") === "true",
   );
 
-  if (!splashSeen) {
+  if (!onboardingComplete) {
     return (
-      <SplashScreen
-        onDismiss={() => {
-          localStorage.setItem("vibeloc_splash_seen", "true");
-          setSplashSeen(true);
+      <FirstLaunchFlow
+        onComplete={() => {
+          localStorage.setItem("vibeloc_onboarding_complete", "true");
+          setOnboardingComplete(true);
         }}
       />
     );
