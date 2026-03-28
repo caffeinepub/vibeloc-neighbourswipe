@@ -9,7 +9,7 @@ import type { Neighbourhood } from "../types/neighbourhood";
 
 const ZONES = [
   "All",
-  "Digital City",
+  "Pop Up Cities",
   "CBD Core",
   "Waiyaki Way",
   "Northern Heights",
@@ -112,15 +112,15 @@ export default function DiscoverPage() {
               data-ocid={`discover.${zone.toLowerCase().replace(/[^a-z0-9]/g, "-")}.tab`}
               className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
                 selectedZone === zone
-                  ? zone === "Digital City"
+                  ? zone === "Pop Up Cities"
                     ? "bg-emerald-500 text-white shadow-[0_0_10px_rgba(52,211,153,0.5)]"
                     : "bg-primary text-primary-foreground"
-                  : zone === "Digital City"
+                  : zone === "Pop Up Cities"
                     ? "border border-emerald-400 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-300"
                     : "border border-border bg-background text-muted-foreground hover:border-primary/50 hover:text-foreground"
               }`}
             >
-              {zone === "Digital City" ? "⚡ Digital City" : zone}
+              {zone === "Pop Up Cities" ? "⚡ Pop Up Cities" : zone}
             </button>
           ))}
         </div>

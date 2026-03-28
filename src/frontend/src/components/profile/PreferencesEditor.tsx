@@ -166,7 +166,7 @@ const ZONES = [
       "Infinity",
     ],
   },
-  { name: "⚡ Digital City", neighbourhoods: ["BustaniNeo"] },
+  { name: "⚡ Pop Up Cities", neighbourhoods: ["BustaniNeo"] },
 ];
 
 // Keep NAIROBI_AREAS for any other consumers

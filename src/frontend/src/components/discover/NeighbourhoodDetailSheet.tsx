@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
@@ -6,8 +7,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Bus, ExternalLink, MapPin, Train } from "lucide-react";
+import { Bus, ExternalLink, MapPin, Share2, Train } from "lucide-react";
+import { toast } from "sonner";
 import type { Neighbourhood } from "../../types/neighbourhood";
+import { slugify } from "../../utils/slugify";
 
 interface NeighbourhoodDetailSheetProps {
   neighbourhood: Neighbourhood;
@@ -24,6 +27,28 @@ export default function NeighbourhoodDetailSheet({
   const bbox = `${lng - 0.02},${lat - 0.02},${lng + 0.02},${lat + 0.02}`;
   const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`;
   const mapHref = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=14/${lat}/${lng}`;
+
+  async function handleShare() {
+    const slug = slugify(neighbourhood.name);
+    const url = `${window.location.origin}${window.location.pathname}?hood=${slug}`;
+    const title = `${neighbourhood.name} | VibeLoc by GJilani`;
+    const text = `Check out ${neighbourhood.name} on VibeLoc — ${neighbourhood.vibeSummary}. Match your vibe 📍`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+      } catch {
+        // User cancelled or share failed silently
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        toast.success("Link copied! Share it on WhatsApp or social media.");
+      } catch {
+        toast.error("Could not copy link. Try again.");
+      }
+    }
+  }
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -132,6 +157,19 @@ export default function NeighbourhoodDetailSheet({
                   </Badge>
                 ))}
               </div>
+            </div>
+
+            {/* Share */}
+            <div className="pt-1">
+              <Button
+                variant="outline"
+                className="w-full gap-2"
+                onClick={handleShare}
+                data-ocid="neighbourhood.share.button"
+              >
+                <Share2 className="h-4 w-4" />
+                Share this neighbourhood
+              </Button>
             </div>
 
             {/* Bottom padding for safe area */}

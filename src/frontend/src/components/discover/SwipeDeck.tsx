@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Check, Heart, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Neighbourhood } from "../../types/neighbourhood";
+import { slugify } from "../../utils/slugify";
 import NeighbourhoodCard from "./NeighbourhoodCard";
 import NeighbourhoodDetailSheet from "./NeighbourhoodDetailSheet";
 import SwipeHintOverlay from "./SwipeHintOverlay";
@@ -36,9 +37,36 @@ export default function SwipeDeck({
   const currentNeighbourhood = neighbourhoods[currentIndex];
   const nextNeighbourhood = neighbourhoods[currentIndex + 1];
 
-  // Preload next 3 images whenever currentIndex changes
+  // Handle ?hood= deep-link on mount — open detail sheet for the linked neighbourhood
   useEffect(() => {
-    for (const offset of [1, 2, 3]) {
+    if (neighbourhoods.length === 0) return;
+    const params = new URLSearchParams(window.location.search);
+    const hoodParam = params.get("hood");
+    if (!hoodParam) return;
+
+    const targetIndex = neighbourhoods.findIndex(
+      (n) => slugify(n.name) === hoodParam,
+    );
+    if (targetIndex !== -1) {
+      setCurrentIndex(targetIndex);
+      setShowDetail(true);
+    }
+    // Clean up URL param after handling
+    window.history.replaceState({}, "", window.location.pathname);
+  }, [neighbourhoods]);
+
+  // Preload first image immediately on mount
+  useEffect(() => {
+    const first = neighbourhoods[0];
+    if (first?.imageFilename) {
+      const img = new Image();
+      img.src = first.imageFilename;
+    }
+  }, [neighbourhoods]);
+
+  // Preload next 5 images whenever currentIndex changes
+  useEffect(() => {
+    for (const offset of [1, 2, 3, 4, 5]) {
       const next = neighbourhoods[currentIndex + offset];
       if (next?.imageFilename) {
         const img = new Image();

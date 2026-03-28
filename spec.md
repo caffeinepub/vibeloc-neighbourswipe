@@ -1,27 +1,32 @@
-# VibeLoc — Swipe Gesture Hint Overlay
+# VibeLoc — Shareable Neighbourhood Cards
 
 ## Current State
-SwipeDeck handles drag/swipe interactions but has no onboarding gesture hint. Users land on Discover and must figure out swiping on their own. The only hint is a small text label "Swipe or tap to choose".
+The app has a `NeighbourhoodDetailSheet` (bottom sheet) that opens when a user taps "Learn More" on a swipe card. It shows a map, vibe summary, rent range, landmarks, transport, and tags. There is no share functionality anywhere in the app.
 
 ## Requested Changes (Diff)
 
 ### Add
-- `SwipeHintOverlay` component: a one-time animated overlay shown on the first card in the first Discover session
-- Overlay shows a hand/finger icon animating left and right over the card with labels "PASS" (left) and "LIKE" (right)
-- Auto-dismisses after ~2.5 seconds, or immediately on tap/swipe
-- Uses localStorage key `vibeloc_swipe_hint_seen` to ensure it never shows again after the first time
+- A **Share button** inside `NeighbourhoodDetailSheet`, positioned at the bottom of the panel (after the Tags section, before the bottom padding)
+- Share behaviour:
+  1. Use the **Web Share API** (`navigator.share`) if available (mobile, most modern browsers) — shares a title, text (neighbourhood name + vibe summary), and URL
+  2. Fall back to a **copy-to-clipboard** approach if Web Share API is not available, with a toast confirmation
+- The share URL should be the current page URL with a query param `?hood=<neighbourhood-slug>` (e.g. `?hood=kilimani`) so links are deep-linkable
+- On app load, if the `?hood=` param is present, auto-open the detail sheet for that neighbourhood
+- Share text format: `"Check out {Name} on VibeLoc — {vibeSummary}. Match your vibe 📍"`
+- Share title: `"{Name} | VibeLoc by GJilani"`
+- Share platforms via Web Share API: WhatsApp, Twitter/X, and any other installed share targets are handled automatically by the OS sheet
+- The Share button uses a share icon (lucide `Share2`) and is styled consistently with the rest of the sheet
 
 ### Modify
-- `SwipeDeck.tsx`: import and render `SwipeHintOverlay` on top of the first card, only when hint hasn't been seen
+- `NeighbourhoodDetailSheet.tsx` — add Share button section at the bottom
+- Main app entry (App.tsx or wherever routing/URL params are read) — read `?hood=` param on load and open the correct neighbourhood detail sheet
 
 ### Remove
-- Nothing
+- Nothing removed
 
 ## Implementation Plan
-1. Create `src/frontend/src/components/discover/SwipeHintOverlay.tsx`
-   - Check localStorage on mount; if already seen, render nothing
-   - Show full-card overlay with animated hand icon sliding left→right→left
-   - Render PASS label on left, LIKE label on right
-   - Auto-dismiss via setTimeout(2500ms), also dismiss on any touch/click
-   - On dismiss: set localStorage flag and unmount
-2. Import and place `<SwipeHintOverlay>` inside SwipeDeck, absolutely positioned over the card, only shown when `currentIndex === 0`
+1. Add a `generateShareUrl(neighbourhood)` helper that returns the current origin + `?hood=` slug
+2. Add a `handleShare(neighbourhood)` function that calls `navigator.share` if available, else copies URL to clipboard and shows a toast
+3. Add Share button to `NeighbourhoodDetailSheet` at the bottom of the scroll area
+4. In the top-level app component, read `window.location.search` for `?hood=` param on mount; if found, find the matching neighbourhood by slug and open the detail sheet
+5. The neighbourhood slug is derived from the name: lowercase, spaces replaced with hyphens (e.g. "Nairobi CBD" → "nairobi-cbd")

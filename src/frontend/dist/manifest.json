@@ -5,9 +5,10 @@
   "theme_color": "#6d28d9",
   "background_color": "#0f0f1a",
   "display": "standalone",
-  "orientation": "portrait",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "start_url": "/",
   "scope": "/",
+  "screenshots": [],
   "icons": [
     {
       "src": "/assets/generated/vibeloc-icon-192.dim_192x192.png",

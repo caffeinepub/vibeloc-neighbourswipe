@@ -51,7 +51,8 @@ export default function NeighbourhoodCard({
           // @ts-ignore fetchPriority is a valid HTML attribute
           fetchPriority="high"
           decoding="async"
-          className={`h-full w-full object-cover transition-opacity duration-500 ${
+          style={{ willChange: "opacity" }}
+          className={`h-full w-full object-cover transition-opacity duration-300 ${
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}
           onLoad={() => setImageLoaded(true)}

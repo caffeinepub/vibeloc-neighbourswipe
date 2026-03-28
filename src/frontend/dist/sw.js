@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vibeloc-v1';
+const CACHE_NAME = 'vibeloc-v2';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
@@ -26,7 +26,7 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch: network-first for ICP API calls, cache-first for static assets
+// Fetch: network-first for ICP API calls, stale-while-revalidate for images, cache-first for other static assets
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
@@ -46,11 +46,31 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache-first for static assets (images, fonts, etc.)
+  // Stale-while-revalidate for images — serve cached immediately, update in background
+  if (
+    url.pathname.endsWith('.jpg') ||
+    url.pathname.endsWith('.png') ||
+    url.pathname.endsWith('.webp')
+  ) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.match(event.request).then((cached) => {
+          const fetchPromise = fetch(event.request).then((response) => {
+            if (response.ok) {
+              cache.put(event.request, response.clone());
+            }
+            return response;
+          });
+          return cached || fetchPromise;
+        })
+      )
+    );
+    return;
+  }
+
+  // Cache-first for other static assets (svg, fonts, icons)
   if (
     url.pathname.startsWith('/assets/') ||
-    url.pathname.endsWith('.png') ||
-    url.pathname.endsWith('.jpg') ||
     url.pathname.endsWith('.svg') ||
     url.pathname.endsWith('.woff2') ||
     url.pathname.endsWith('.ico')
@@ -70,7 +90,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-first for everything else (JS, CSS, HTML)
+  // Network-first for everything else (JS, CSS, HTML) — cache for offline fallback
   event.respondWith(
     fetch(event.request)
       .then((response) => {

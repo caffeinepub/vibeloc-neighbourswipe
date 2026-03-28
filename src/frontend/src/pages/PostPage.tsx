@@ -64,11 +64,6 @@ type TabId = "spaces" | "insights" | "community";
 
 const TABS: { id: TabId; label: string; icon: React.ReactNode }[] = [
   {
-    id: "spaces",
-    label: "Spaces",
-    icon: <Building2 className="h-3.5 w-3.5" />,
-  },
-  {
     id: "insights",
     label: "Insights & Vibes",
     icon: <Sparkles className="h-3.5 w-3.5" />,
@@ -77,6 +72,11 @@ const TABS: { id: TabId; label: string; icon: React.ReactNode }[] = [
     id: "community",
     label: "Community & Events",
     icon: <CalendarDays className="h-3.5 w-3.5" />,
+  },
+  {
+    id: "spaces",
+    label: "Spaces",
+    icon: <Building2 className="h-3.5 w-3.5" />,
   },
 ];
 
@@ -779,7 +779,7 @@ function CommunityForm() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PostPage() {
-  const [activeTab, setActiveTab] = useState<TabId>("spaces");
+  const [activeTab, setActiveTab] = useState<TabId>("insights");
 
   return (
     <div className="min-h-screen">
