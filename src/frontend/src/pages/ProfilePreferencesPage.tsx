@@ -3,23 +3,16 @@ import { User } from "lucide-react";
 import { toast } from "sonner";
 import AuthButton from "../components/auth/AuthButton";
 import PreferencesEditor from "../components/profile/PreferencesEditor";
-import ProfileSetupDialog from "../components/profile/ProfileSetupDialog";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
 import { usePreferences } from "../hooks/usePreferences";
 import { useGetCallerUserProfile } from "../hooks/useQueries";
 
 export default function ProfilePreferencesPage() {
   const { identity } = useInternetIdentity();
-  const {
-    data: userProfile,
-    isLoading: profileLoading,
-    isFetched,
-  } = useGetCallerUserProfile();
+  const { data: userProfile } = useGetCallerUserProfile();
   const { preferences, savePreferences, isSaving } = usePreferences();
 
   const isAuthenticated = !!identity;
-  const showProfileSetup =
-    isAuthenticated && !profileLoading && isFetched && userProfile === null;
 
   const handleSavePreferences = async (newPreferences: any) => {
     try {
@@ -33,8 +26,6 @@ export default function ProfilePreferencesPage() {
 
   return (
     <div className="container mx-auto max-w-2xl px-4 py-8">
-      <ProfileSetupDialog open={showProfileSetup} />
-
       <div className="space-y-6">
         <Card>
           <CardHeader>
