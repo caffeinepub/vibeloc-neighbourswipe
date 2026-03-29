@@ -711,7 +711,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 37,
     name: "Northlands",
-    zone: "Thika Road",
+    zone: "Smart Cities",
     description:
       "Nairobi's northern frontier — master-planned and ambitious for early movers.",
     vibeSummary:
@@ -1553,7 +1553,7 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
   {
     id: 82,
     name: "Tatu City",
-    zone: "Eastern Bypass",
+    zone: "Smart Cities",
     description:
       "Nairobi's most ambitious urban project — master-planned smart city with its own infrastructure.",
     vibeSummary:
@@ -1666,19 +1666,26 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     transportOptions: ["Kangundo Road matatus"],
   },
 
-  // ─── Pop Up Cities ─────────────────────────────────────────────────────────
+  // ─── Smart Cities ─────────────────────────────────────────────────────────
   {
     id: 88,
     name: "BustaniNeo",
-    zone: "Pop Up Cities",
+    zone: "Smart Cities",
     description:
-      "A digital city for creative rebels — decentralized, community-first, and Dewellpunk-powered.",
+      "A creative smart city built on community and innovation — where digital infrastructure meets African youth culture.",
     vibeSummary:
-      "A digital city for creative rebels — decentralized, community-first, Dewellpunk-powered. Where BustaniNeo exists, geography is optional and imagination builds the neighbourhood.",
+      "A creative smart city anchored in community and innovation. BustaniNeo is where African youth culture, digital infrastructure, and new ideas build something that geography alone cannot.",
     rentMin: 0,
     rentMax: 0,
     commuteNote: "Wherever you are — BustaniNeo is there",
-    tags: ["Digital", "Creative", "Dewellpunk", "DeSci", "Community", "Remote"],
+    tags: [
+      "Smart City",
+      "Creative",
+      "Community",
+      "Digital",
+      "Innovation",
+      "Remote",
+    ],
     imageFilename: "/assets/generated/bustanineo.dim_480x600.jpg",
     lat: -1.2921,
     lng: 36.8219,
@@ -1689,6 +1696,25 @@ export const NAIROBI_NEIGHBOURHOODS: Neighbourhood[] = [
     ],
     transportOptions: ["Internet connection", "Anywhere with a signal"],
     isDigitalCity: true,
+  },
+  {
+    id: 89,
+    name: "Konza City",
+    zone: "Smart Cities",
+    description:
+      "Kenya's Silicon Savannah — a purpose-built smart city rising from the plains south of Nairobi.",
+    vibeSummary:
+      "Kenya's Silicon Savannah — a purpose-built tech city rising from open land, designed for innovation, clean energy, and the next generation of African urban life. Still emerging, but unmistakably the future.",
+    rentMin: 25000,
+    rentMax: 120000,
+    commuteNote: "60 min south of Nairobi via Mombasa Road / SGR",
+    tags: ["Smart City", "Tech Hub", "Silicon Savannah", "Emerging", "Planned"],
+    imageFilename: "/assets/generated/konza-city.dim_480x600.jpg",
+    lat: -1.9971,
+    lng: 37.1509,
+    landmarks: ["Konza Technopolis", "Data Centre Hub", "Smart infrastructure"],
+    transportOptions: ["SGR (Konza Station)", "Mombasa Road"],
+    isDigitalCity: false,
   },
 ];
 

@@ -16,6 +16,7 @@ import MatchesPage from "./pages/MatchesPage";
 import NeighbourhoodListingsPage from "./pages/NeighbourhoodListingsPage";
 import PostPage from "./pages/PostPage";
 import ProfilePreferencesPage from "./pages/ProfilePreferencesPage";
+import PulsesPage from "./pages/PulsesPage";
 
 const rootRoute = createRootRoute({
   component: AppLayout,
@@ -54,6 +55,12 @@ const postRoute = createRoute({
   component: PostPage,
 });
 
+const pulsesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/pulses",
+  component: PulsesPage,
+});
+
 const profileRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/profile",
@@ -72,6 +79,7 @@ const routeTree = rootRoute.addChildren([
   matchesRoute,
   neighbourhoodListingsRoute,
   postRoute,
+  pulsesRoute,
   profileRoute,
   adminRoute,
 ]);

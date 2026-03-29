@@ -28,7 +28,7 @@ export default function NeighbourhoodCard({
 
   // Build the full list of tags to show at the top, including digital city label
   const topTags = [
-    ...(isDigital ? ["⚡ Pop Up Cities", "🌿 Dewellpunk"] : []),
+    ...(isDigital ? ["🏙️ Smart Cities"] : []),
     ...(matchReasons ?? []).slice(0, 2).map((r) => `✦ ${r}`),
   ];
 
