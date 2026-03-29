@@ -209,7 +209,7 @@ export default function PulsesPage() {
                 variant="outline"
                 data-ocid="pulses.post_button"
               >
-                Post a Pulse
+                Go to Post tab
               </Button>
             </Link>
           </div>

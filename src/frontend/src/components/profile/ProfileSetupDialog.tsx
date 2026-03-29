@@ -23,7 +23,7 @@ export default function ProfileSetupDialog({ open }: ProfileSetupDialogProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
-      toast.error("Please enter your name");
+      toast.error("Please enter a username");
       return;
     }
 
@@ -46,15 +46,15 @@ export default function ProfileSetupDialog({ open }: ProfileSetupDialogProps) {
         <DialogHeader>
           <DialogTitle>Welcome to VibeLoc!</DialogTitle>
           <DialogDescription>
-            Let's get started by setting up your profile.
+            Choose a username to get started. This is how others will see you.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Your Name</Label>
+            <Label htmlFor="name">Username</Label>
             <Input
               id="name"
-              placeholder="Enter your name"
+              placeholder="e.g. nairobivibe, kilimanilover"
               value={name}
               onChange={(e) => setName(e.target.value)}
               autoFocus

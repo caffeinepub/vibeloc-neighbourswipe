@@ -397,7 +397,7 @@ function InsightsForm() {
     try {
       await postPulseMutation.mutateAsync({
         neighbourhood,
-        category: "insights",
+        category: "Insights & Vibes",
         postType,
         title: title.trim(),
         description: description.trim(),
@@ -595,7 +595,7 @@ function CommunityForm() {
     try {
       await postPulseMutation.mutateAsync({
         neighbourhood,
-        category: "community",
+        category: "Community & Events",
         postType,
         title: title.trim(),
         description: description.trim(),
